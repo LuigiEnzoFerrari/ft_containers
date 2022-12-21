@@ -11,7 +11,7 @@ enable_testing()
 
 add_executable(tests
 	vecTest.cpp
-	vecTestd.cpp
+	vectorTest.cpp
 )
 
 target_link_libraries(tests gtest_main)

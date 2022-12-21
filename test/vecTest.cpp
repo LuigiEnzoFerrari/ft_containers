@@ -1,7 +1,6 @@
 #include <iostream>
 #include "vec.hpp"
 #include <gtest/gtest.h>
-#include <vector>
 
 TEST(TestEqual, TestEqualTrue) {
 	std::vector<int> one;
