@@ -10,8 +10,7 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(tests
-	vecTest.cpp
-	vectorTest.cpp
+  random_access_iteratorTest.cpp
 )
 
 target_link_libraries(tests gtest_main)
