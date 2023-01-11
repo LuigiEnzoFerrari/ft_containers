@@ -12,7 +12,7 @@ endif()
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall -Wextra -Werror -std=c++98 -pedantic -Wfatal-errors -g")
+set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall -Wextra -Werror -std=c++98 -pedantic -g")
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
   add_compile_options(-fsanitize=address)
