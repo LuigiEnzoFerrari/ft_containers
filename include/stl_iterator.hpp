@@ -4,7 +4,6 @@
 #include "stl_iterator_base_types.hpp"
 
 namespace ft {
-
 	template <typename Iterator>
 	class reverse_iterator {
 		protected:
@@ -19,10 +18,10 @@ namespace ft {
 			typedef typename traits_type::reference				reference;
 			typedef typename traits_type::iterator_category		iterator_category;
 
-			reverse_iterator( void ) {};
-			explicit reverse_iterator ( iterator_type it ) {};
+			reverse_iterator(void) : it(NULL) {};
+			explicit reverse_iterator(iterator_type x) : it(x) {};
 			template <class Iter>
-			reverse_iterator ( const reverse_iterator<Iter>& rev_it ) {};
+			reverse_iterator(const reverse_iterator<Iter> &x) : it(x.it) {}
 
 			reverse_iterator operator+( difference_type n ) const {
 				return (reverse_iterator(*this - n));
@@ -42,6 +41,16 @@ namespace ft {
 				operator++();
 				return (tmp);
 			}
+
+			reverse_iterator &operator+=(difference_type n) {
+				it -= n;
+				return (*this);
+			};
+
+			reverse_iterator &operator-=(difference_type n) {
+				it += n;
+				return (*this);
+			};
 
 			reverse_iterator& operator--() {
 				++it;
@@ -72,7 +81,6 @@ namespace ft {
 				return (*it);
 			}
 	};
-
 
 	template <typename T>
 	class normal_iterator: public ft::iterator<ft::random_access_iterator_tag, T> {
@@ -114,7 +122,14 @@ namespace ft {
 			bool operator<=(const normal_iterator& rhs) const {
 				return (this->p <= rhs.p);
 			}
-
+			normal_iterator &operator+=(int const rhs) {
+			this->p += rhs;
+			return (*this);
+			};
+			normal_iterator &operator-=(int const rhs) {
+			this->p -= rhs;
+			return (*this);
+			};
 			normal_iterator& operator=( const T& rhs ) {
 				if (this != rhs) {
 					this->p = rhs.p;
@@ -123,11 +138,11 @@ namespace ft {
 			}
 
 			normal_iterator operator+( difference_type n ) const {
-				return (*this + n);
+				return (normal_iterator(this->p + n));
 			}
 
 			normal_iterator operator-( difference_type n ) const {
-				return (*this - n);
+				return (normal_iterator(this->p - n));
 			}
 
 			normal_iterator& operator++() {
