@@ -23,6 +23,7 @@ void testCopyConstructor(UnitTest unit) {
 	unit.assertEqual(*it3, *it4);
 	unit.assertEqual(it3[3], it4[3]);
 	unit.assertTrue((it3 + 3) == (it4 + 3));
+
 	delete[] tmp;
 }
 

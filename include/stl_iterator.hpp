@@ -2,6 +2,7 @@
 #define STL_ITERATOR_HPP
 #include <iterator>
 #include "stl_iterator_base_types.hpp"
+#include <iostream>
 
 namespace ft {
 	template <typename Iterator>
@@ -182,6 +183,12 @@ namespace ft {
 		private:
 			pointer p;
 	};
+	template<class InputIterator>
+	typename iterator_traits<InputIterator>::difference_type distance (InputIterator first, InputIterator last) {
+		typename std::iterator_traits<InputIterator>::difference_type i = 0;
+		for (; first != last; i++, first++) {};
+		return (i); 
+	}
 }
 
 

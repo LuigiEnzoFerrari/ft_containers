@@ -4,14 +4,14 @@
 #include <vector>
 #include <cstring>
 
-#define RESET_COLOR "\e[0m" 
+#define RESET_COLOR "\033[0m" 
 
 /*
 ** testSuite settings
 */
 
-#define TEST_SUITE_NAME_COLOR "\e[1;36m"
-#define TEST_SUITE_TEST_COLOR "\e[0m"
+#define TEST_SUITE_NAME_COLOR "\033[1;36m"
+#define TEST_SUITE_TEST_COLOR "\033[0m"
 #define TEST_SUITE_TEST " Test"
 
 class UnitTest {
@@ -24,8 +24,8 @@ class UnitTest {
 	public:
 		UnitTest( std::string assert_fail = "Fail",
 			std::string assert_pass = "Pass",
-			std::string assert_color_fail = "\e[31m",
-			std::string assert_color_pass = "\e[32m"):
+			std::string assert_color_fail = "\033[31m",
+			std::string assert_color_pass = "\033[32m"):
 			_assert_fail(assert_fail),
 			_assert_pass(assert_pass),
 			_assert_color_fail(assert_color_fail),

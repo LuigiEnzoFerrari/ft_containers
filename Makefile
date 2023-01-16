@@ -11,22 +11,28 @@ SRCS_PATHS := $(addprefix $(SRCSDIR)/, $(SRCS))
 
 OBJDIR := ./objs/
 
-OBJS := $(addprefix $(OBJDIR), $(notdir $(SRCS_PATHS:.cpp=.o)))
+FT_OBJS := $(addprefix $(OBJDIR)ft_, $(notdir $(SRCS_PATHS:.cpp=.o)))
+
+STD_OBJS :=$(addprefix $(OBJDIR)std_, $(notdir $(SRCS_PATHS:.cpp=.o)))
 
 INC := -I./include/ -I tests/
 
-$(OBJDIR)%.o: ./tests/%.cpp
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
-
 all: $(FT_NAME) $(STD_NAME)
 
-$(STD_NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@
+$(STD_NAME): $(STD_OBJS)
+	$(CC) $(CFLAGS) $(STD_OBJS) -o $@
 
-$(FT_NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@
+$(FT_NAME): $(FT_OBJS)
+	$(CC) $(CFLAGS) $(FT_OBJS) -o $@
 
-$(OBJS): | $(OBJDIR)
+$(OBJDIR)ft_%.o: ./tests/%.cpp
+	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+
+$(OBJDIR)std_%.o: ./tests/%.cpp
+	$(CC) $(CFLAGS) -D STD $(INC) -c $< -o $@
+
+	
+$(FT_OBJS): | $(OBJDIR)
 
 $(OBJDIR):
 	mkdir $(OBJDIR)
@@ -39,4 +45,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re one
