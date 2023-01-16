@@ -1,38 +1,39 @@
 FT_NAME := ft_containers
 STD_NAME := std_containers
 CC := c++
-CFLAGS := -Wall -Wextra -Werror -g -std=c++98 -fsanitize=address -Wfatal-errors
+CFLAGS := -Wall -Wextra -Werror -g -std=c++98 -fsanitize=address -Wfatal-errors -pedantic-errors
 
-SRCSDIR := ./tests/Simple-UnitTestCpp
+MAIN = main.cpp
 
-SRCS := main.cpp iterator.cpp
+TESTDIRS := normal_iterator/ func/
+VPATH = $(addprefix tests/, $(TESTDIRS))
 
-SRCS_PATHS := $(addprefix $(SRCSDIR)/, $(SRCS))
-
+SRCS := iterator.cpp funct.cpp
 OBJDIR := ./objs/
 
-FT_OBJS := $(addprefix $(OBJDIR)ft_, $(notdir $(SRCS_PATHS:.cpp=.o)))
+FT_OBJS := $(addprefix $(OBJDIR)ft_, $(notdir $(SRCS:.cpp=.o)))
+STD_OBJS :=$(addprefix $(OBJDIR)std_, $(notdir $(SRCS:.cpp=.o)))
 
-STD_OBJS :=$(addprefix $(OBJDIR)std_, $(notdir $(SRCS_PATHS:.cpp=.o)))
-
-INC := -I./include/ -I tests/
+INC := -I include/ -I tests/
 
 all: $(FT_NAME) $(STD_NAME)
 
-$(STD_NAME): $(STD_OBJS)
-	$(CC) $(CFLAGS) $(STD_OBJS) -o $@
-
 $(FT_NAME): $(FT_OBJS)
-	$(CC) $(CFLAGS) $(FT_OBJS) -o $@
+	$(CC) $(CFLAGS) $(MAIN) $(INC) $(FT_OBJS) -o $@
 
-$(OBJDIR)ft_%.o: ./tests/%.cpp
+$(STD_NAME): $(STD_OBJS)
+	$(CC) $(CFLAGS) $(MAIN) $(INC) $(STD_OBJS) -o $@
+
+$(OBJDIR)ft_%.o: %.cpp
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-$(OBJDIR)std_%.o: ./tests/%.cpp
+$(OBJDIR)ft_%.o: %.cpp
+	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+$(OBJDIR)std_%.o: %.cpp
 	$(CC) $(CFLAGS) -D STD $(INC) -c $< -o $@
-
 	
 $(FT_OBJS): | $(OBJDIR)
+$(STD_OBJS): | $(OBJDIR)
 
 $(OBJDIR):
 	mkdir $(OBJDIR)

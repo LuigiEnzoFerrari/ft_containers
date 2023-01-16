@@ -130,7 +130,7 @@ namespace ft {
 				for (size_type i = 0; i + this->_size < n; i++) {
 					this->_alloc.construct(&p[i + this->_size], *first++);
 				}
-				this->_size = n;
+				this->_size = n - 1;
 			};
 
 			void assign(size_type n, const value_type& val) {

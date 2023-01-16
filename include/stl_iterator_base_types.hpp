@@ -1,7 +1,7 @@
 #ifndef STL_ITERATOR_BASE_TYPES_HPP
 #define STL_ITERATOR_BASE_TYPES_HPP
 #include <iterator>
-#include <cstddef>
+
 namespace ft {
 	struct input_iterator_tag { };
 
@@ -13,7 +13,7 @@ namespace ft {
 
 	struct random_access_iterator_tag : public bidirectional_iterator_tag { };
 
-	template <typename Category, typename T, typename Distance = ptrdiff_t, typename Pointer = T*, typename Reference = T&>
+	template <typename Category, typename T, typename Distance = std::ptrdiff_t, typename Pointer = T*, typename Reference = T&>
 	struct iterator {
 		typedef T         value_type;
 		typedef Distance  difference_type;
@@ -33,7 +33,7 @@ namespace ft {
 
 	template <typename T>
 	struct iterator_traits<T*> {
-		typedef ptrdiff_t difference_type;
+		typedef std::ptrdiff_t difference_type;
 		typedef T value_type;
 		typedef T* pointer;
 		typedef T& reference;
@@ -42,7 +42,7 @@ namespace ft {
 
 	template <typename T>
 	struct iterator_traits<const T*> {
-		typedef ptrdiff_t difference_type;
+		typedef std::ptrdiff_t difference_type;
 		typedef T value_type;
 		typedef const T* pointer;
 		typedef const T& reference;

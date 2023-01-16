@@ -1,8 +1,8 @@
 #ifndef UNITEST_HPP
 #define UNITEST_HPP
 #include <iostream>
-#include <vector>
 #include <cstring>
+
 
 #define RESET_COLOR "\033[0m" 
 
@@ -77,7 +77,6 @@ class UnitTest {
 };
 
 typedef void (*testlist[])(UnitTest);
-typedef std::vector<void(*)(UnitTest)> asserts;
 template <typename T, std::size_t N>
 T* end(T(&arr)[N])
 {
@@ -99,6 +98,6 @@ void testSuite(std::string name, T(&suit)[N], UnitTest unit = UnitTest()) {
 		suit[i](unit);
 		std::cout << RESET_COLOR;
 	};
-};
+}
 
 #endif
