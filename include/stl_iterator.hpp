@@ -66,12 +66,11 @@ namespace ft {
 
 			reference operator*() const {
 				Iterator tmp = it;
-				tmp--;
-				return (*tmp);
+				return (*--tmp);
 			}
 
 			pointer operator->() const {
-				return (it);
+				return (&(operator*()));
 			}
 
 			reference operator[]( difference_type n ) const {
@@ -79,7 +78,7 @@ namespace ft {
 			}
 
 			iterator_type base() const {
-				return (*it);
+				return (it);
 			}
 	};
 
