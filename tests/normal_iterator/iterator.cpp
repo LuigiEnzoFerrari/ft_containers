@@ -1,72 +1,98 @@
-#include "iterator.hpp"
+#include "tests.hpp"
 
-// void testVecReverse(UnitTest unit) {
-// 	int p[4] = {3, 4, 5, 2};
-// 	ft::vector<int> vec(p, p + 4);
-
-// 	ft::vector<int>::reverse_iterator it = vec.rbegin();
-// 	unit.assertEqual(*(it + 2), *(p + 2));
-// }
-
-void testCopyConstructor(UnitTest unit) {
+void testConstructors(UnitTest unit) {
 	ft::vector<int>::iterator it;
 	ft::vector<int>::iterator it2(it);
-	unit.assertTrue(it == it2);
 
+	unit.assertTrue(it == it2, "Expected: True; it2(it), it == it2");
 	int *p = new int[5];
-	int *tmp = p;
 	for (int i = 0; i < 5; i++) { p[i] = i<<1; }
 
 	ft::vector<int>::iterator it3(p);
 	ft::vector<int>::iterator it4(it3);
-	unit.assertEqual(*it3, *it4);
-	unit.assertEqual(it3[3], it4[3]);
-	unit.assertTrue((it3 + 3) == (it4 + 3));
+	unit.assertEqual(it3, it4, "Expected: True; it3(p), it4(it3), it3 == it4");
+	unit.assertEqual(it3[3], it4[3], "Expected: True; it3[3] == it4[3]");
+	unit.assertTrue((it3 + 3) == (it4 + 3), "Expected: True; it3 + 3 == it4 + 3");
 
-	delete[] tmp;
+	it = it3;
+	unit.assertEqual(it, it3, "Expected: True; it = it3, it == it3");
+	unit.assertEqual(it[3], it3[3], "Expected: True; it3[3] == it[3]");
+	unit.assertTrue((it + 3) == (it3 + 3), "Expected: True; it + 3 == it3 + 3");
+
+	delete[] p;
+}
+
+void testIncrementedDecremented(UnitTest unit) {
+	int *p = new int[5];
+	bool equal = true;
+
+	ft::vector<int>::iterator it(p);
+	for (int i = 0; i < 5; i++, p++, it++) {
+		*p = i<<1;
+		if (*it != *p) {
+			equal = false;
+		}
+	}
+
+	unit.assertTrue(equal, "Expect: True; *it++ == *p++");
+	for (int i = 0; i < 5; i++, p--, it--) {
+		if (*(it - 1) != *(p - 1)) {
+			equal = false;
+		}
+	}
+
+	unit.assertTrue(equal, "Expect: True; *it-- == *p--");
+
+	for (int i = 0; i < 5; i++) {
+		if (*it != *p) {
+			equal = false;
+		}
+		++p;
+		++it;
+	}
+	unit.assertTrue(equal, "Expect: True; *++it == *++p");
+	for (int i = 0; i < 5; i++) {
+		if (*(it - 1) != *(p - 1)) {
+			equal = false;
+		}
+		--p;
+		--it;
+	}
+	unit.assertTrue(equal, "Expect: True; *--it == *--p");
+	delete[] p;
+}
+
+void offsetDereferenceOperator(UnitTest unit) {
+	int *p = new int[5];
+	bool equal = true;
+
+	ft::vector<int>::iterator it(p);
+	for (int i = 0; i < 5; i++) {
+			p[i] = i<<1;
+			if (it[i] != p[i]) {
+				equal = false;
+			}
+		}
+	unit.assertTrue(equal, "Expect: True; it[i] == p[i]");
+	delete[] p;
 }
 
 void TestCompoundAssignmentOperations(UnitTest unit) {
-	int *p = new int[5];
-	int *tmp = p;
-	for (int i = 0; i < 5; i++) { p[i] = i<<1; }
-	ft::vector<int>::iterator it(p);
-	std::cout << "one" << std::endl;
-	std::cout << "two" << std::endl;
-	unit.assertEqual(*(p + 3), *(it + 3));
-	std::cout << "three" << std::endl;
-	bool equal = true;
-	for (size_t i = 0; i < 5; i++) {
-		if (*it++ != *p++) {
-			equal = false;
-		}
-	}
-	unit.assertTrue(equal);
+	std::string *names = new std::string[5];
+	names[0] = "Luigi";
+	names[1] = "Caio";
+	names[2] = "Rafa";
+	names[3] = "Adrian";
+	names[4] = "Gustavo";
+	ft::vector<std::string>::iterator it(names);
+	it += 3;
+	unit.assertTrue(!(*it).compare("Adrian"), "Expected: True; it += 3, *it == Adrian");
+	unit.assertFalse(!(*it).compare("Rafa"), "Expected: Fase; it += 3, *it == Rafa");
 
-	unit.assertEqual(*(p - 3), *(it - 3));
-
-	for (size_t i = 0; i < 5; i++) {
-		if (*--it != *--p) {
-			equal = false;
-		}
-	}
-
-	unit.assertTrue(equal);
-	for (size_t i = 0; i < 1; i++) {
-		if (it[i] != p[i]) {
-			unit.assertTrue(equal);
-		}
-	}
-
-	p += 4;
-	it += 4;
-	unit.assertEqual(*p, *it);
-
-	p -= 2;
 	it -= 2;
-	unit.assertEqual(*p, *it);
-
-	delete[] tmp;
+	unit.assertFalse(!(*it).compare("Adrian"), "Expected: Fase; it -= 2, *it == Adrian");
+	unit.assertTrue(!(*it).compare("Caio"), "Expected: True; it -= 2, *it == Caio");
+	delete[] names;
 }
 
 void testCompareOperators(UnitTest unit) {
@@ -75,21 +101,22 @@ void testCompareOperators(UnitTest unit) {
 
 	for (int i = 0; i < 5; i++) { p[i] = i<<1; }
 	ft::vector<int>::iterator it(p);
-	unit.assertTrue(it == it, "it == it");
-	unit.assertFalse(it + 1 == it);
+	unit.assertTrue(it == it, "Expected: True, it == it");
+	unit.assertFalse(it + 1 == it, "Expected: False, it + 1 == it");
+	unit.assertTrue(it + 1 != it, "Expected: True, it + 1 != it");
 
-	unit.assertFalse(it > it);
-	unit.assertTrue(it + 1 > it);
+	unit.assertFalse(it > it, "Expected: False, it > it");
+	unit.assertTrue(it + 1 > it, "Expected: True, it + 1 > it");
 	
-	unit.assertFalse(it < it);
-	unit.assertTrue(it < it + 1);
+	unit.assertFalse(it < it, "Expected: False, it < it");
+	unit.assertTrue(it < it + 1, "Expected: True, it < it + 1");
 	
-	unit.assertTrue(it >= it);
-	unit.assertTrue(it + 1 >= it);
-	unit.assertFalse(it >= it + 1);
+	unit.assertTrue(it >= it, "Expected: True, it >= it");
+	unit.assertTrue(it + 1 >= it, "Expected: True, it + 1 >= it");
+	unit.assertFalse(it >= it + 1, "Expected: False, it >= it + 1");
 
-	unit.assertTrue(it <= it);
-	unit.assertTrue(it <= it + 1);
-	unit.assertFalse(it + 1 <= it);
+	unit.assertTrue(it <= it, "Expected: True, it <= it ");
+	unit.assertTrue(it <= it + 1, "Expected: True, it <= it + 1 ");
+	unit.assertFalse(it + 1 <= it, "Expected: False, it + 1 <= it");
 	delete[] p;
 }

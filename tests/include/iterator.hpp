@@ -1,15 +1,10 @@
 #ifndef ITERATOR_HPP
 #define ITERATOR_HPP
 
-#include "tests.hpp"
-#include "UnitTest.hpp"
-
-void testVecReverse(UnitTest unit);
-
-void testCopyConstructor(UnitTest unit);
-
+void testConstructors(UnitTest unit);
 void TestCompoundAssignmentOperations(UnitTest unit);
-
 void testCompareOperators(UnitTest unit);
+void offsetDereferenceOperator(UnitTest unit);
+void testIncrementedDecremented(UnitTest unit);
 
 #endif

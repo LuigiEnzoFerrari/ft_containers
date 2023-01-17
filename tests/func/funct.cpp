@@ -1,4 +1,4 @@
-#include "funct.hpp"
+#include "tests.hpp"
 
 void assign2(UnitTest unit) {
 	int *p = new int[5];

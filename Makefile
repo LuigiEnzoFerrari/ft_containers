@@ -5,10 +5,10 @@ CFLAGS := -Wall -Wextra -Werror -g -std=c++98 -fsanitize=address -Wfatal-errors 
 
 MAIN = main.cpp
 
-TESTDIRS := normal_iterator/ func/
+TESTDIRS := normal_iterator/ func/ vector/
 VPATH = $(addprefix tests/, $(TESTDIRS))
 
-SRCS := iterator.cpp funct.cpp
+SRCS := iterator.cpp reverse_iterator.cpp funct.cpp vector_members_functions.cpp
 OBJDIR := ./objs/
 
 FT_OBJS := $(addprefix $(OBJDIR)ft_, $(notdir $(SRCS:.cpp=.o)))
@@ -27,8 +27,6 @@ $(STD_NAME): $(STD_OBJS)
 $(OBJDIR)ft_%.o: %.cpp
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-$(OBJDIR)ft_%.o: %.cpp
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 $(OBJDIR)std_%.o: %.cpp
 	$(CC) $(CFLAGS) -D STD $(INC) -c $< -o $@
 	
