@@ -25,11 +25,11 @@ namespace ft {
 			reverse_iterator(const reverse_iterator<Iter> &x) : it(x.it) {}
 
 			reverse_iterator operator+( difference_type n ) const {
-				return (reverse_iterator(*this - n));
+				return (reverse_iterator(it - n));
 			}
 
 			reverse_iterator operator-( difference_type n ) const {
-				return (reverse_iterator(*this + n));
+				return (reverse_iterator(it + n));
 			}
 
 			reverse_iterator& operator++() {
@@ -43,16 +43,6 @@ namespace ft {
 				return (tmp);
 			}
 
-			reverse_iterator &operator+=(difference_type n) {
-				it -= n;
-				return (*this);
-			};
-
-			reverse_iterator &operator-=(difference_type n) {
-				it += n;
-				return (*this);
-			};
-
 			reverse_iterator& operator--() {
 				++it;
 				return (*this);
@@ -63,6 +53,16 @@ namespace ft {
 				operator--();
 				return (tmp);
 			}	
+
+			reverse_iterator &operator+=(difference_type n) {
+				it -= n;
+				return (*this);
+			};
+
+			reverse_iterator &operator-=(difference_type n) {
+				it += n;
+				return (*this);
+			};
 
 			reference operator*() const {
 				Iterator tmp = it;

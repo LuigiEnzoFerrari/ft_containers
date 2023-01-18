@@ -65,10 +65,8 @@ namespace ft {
 
 			vector(const vector& x);
 			~vector() {
-				if (p) {
-					_alloc.destroy(p);
-					_alloc.deallocate(p, _size);
-				}
+				this->clear();
+				_alloc.deallocate(p, this->capacity());
 			};
 			iterator begin() {return (iterator(p));};
 			const_iterator begin() const {return (const_iterator(p));};
@@ -87,11 +85,14 @@ namespace ft {
 			size_type max_size() const {return (_alloc.max_size());};
 			void resize(size_type n, value_type val = value_type()) {
 				if (n < _size) {
-				for (size_type i = 0; n + i < _size ; i++)
-					_alloc.destroy(&p[n + i]);
-				} else {
-				for (size_type i = 0, j = _size; j + i < n; i++)
-					push_back(val);
+					for (size_type i = 0; n + i < _size ; i++) {
+						_alloc.destroy(&p[n + i]);
+					}
+				}
+				else {
+					for (size_type i = 0, j = _size; j + i < n; i++) {
+						push_back(val);
+					}
 				}
 				_size = n;
 			};
@@ -102,9 +103,13 @@ namespace ft {
 					value_type *new_p;
 					_capacity = n;
 					new_p = _alloc.allocate(_capacity);
-					for (size_type i = 0; i < _size; i++)
-					_alloc.construct(&new_p[i], p[i]);
-					this->~vector();
+					for (size_type i = 0; i < _size; i++) {
+						_alloc.construct(&new_p[i], p[i]);
+					}
+					for (size_type i = 0; i < _size; i++) {
+						_alloc.destroy(&p[i]);
+					}
+					_alloc.deallocate(p, this->capacity());	
 					p = new_p;
 				}
 			};
@@ -157,14 +162,15 @@ namespace ft {
                 _alloc.construct(&p[i + _size], val);
             _size = n;
         };
+
         void push_back(const value_type& val) {
-            if (_size == _capacity) {
-                reserve(_capacity * 2);
-                _alloc.construct(&p[_size], val);
-            } else
-                _alloc.construct(&p[_size], val);
+            if (_size == this->_capacity) {
+                reserve(this->_capacity << 1);
+            }
+			_alloc.construct(&p[_size], val);
             _size++;
         };
+
         void pop_back() {
             if (_size > 0) {
                 _alloc.destroy(&p[_size]);
@@ -229,8 +235,8 @@ namespace ft {
             x._capacity = tmp_capacity;
         };
         void clear() {
-            for (size_type i = 0; i < _size; i++)
-                _alloc.destroy(&p[i]);
+			for (size_type i = 0; i < _size; i++)
+				_alloc.destroy(&p[i]);
             _size = 0;
         };
         // allocator

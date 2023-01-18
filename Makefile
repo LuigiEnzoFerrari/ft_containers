@@ -1,8 +1,8 @@
 FT_NAME := ft_containers
 STD_NAME := std_containers
 CC := c++
-CFLAGS := -Wall -Wextra -Werror -g -std=c++98 -fsanitize=address -Wfatal-errors -pedantic-errors
-
+CFLAGS := -Wall -Wextra -Werror -g -std=c++98 -Wfatal-errors -pedantic-errors -fsanitize=address 
+# 
 MAIN = main.cpp
 
 TESTDIRS := normal_iterator/ func/ vector/
