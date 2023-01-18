@@ -8,7 +8,7 @@ MAIN = main.cpp
 TESTDIRS := normal_iterator/ func/ vector/
 VPATH = $(addprefix tests/, $(TESTDIRS))
 
-SRCS := iterator.cpp reverse_iterator.cpp funct.cpp vector_members_functions.cpp
+SRCS := iterator.cpp reverse_iterator.cpp funct.cpp vector_members_functions.cpp test_vector_modifiers.cpp
 OBJDIR := ./objs/
 
 FT_OBJS := $(addprefix $(OBJDIR)ft_, $(notdir $(SRCS:.cpp=.o)))

@@ -1,5 +1,4 @@
 #include "tests.hpp"
-
 static std::string *arraySet( void ) {
 	std::string *names = new std::string[5];
 	names[0] = "Luigi";
@@ -9,6 +8,7 @@ static std::string *arraySet( void ) {
 	names[4] = "Gustavo";
 	return (names);
 }
+
 
 void testVectorModifiers(UnitTest unit) {
 	std::string *names = arraySet();
@@ -43,14 +43,9 @@ void testVectorModifiers(UnitTest unit) {
 			break ;
 		}
 	}
-	// unit.assertTrue(equal, "vec.size() == 10");
 	delete[] names;
 }
-	// for (int i = 0; i < 6; i++) {vec[i] = i};
-	// vec.erase(vec.begin());
-	// unit.assertTrue(vec[0] == 5, "Expected: True, resize(6); vec.size() == 6");
-	// unit.assertTrue(vec.size() == 5, "Expected: True, resize(6); vec.size() == 6");
-	// unit.assertTrue(vec.capacity() == 6, "Expected: True; vec.capacity() == 6");
+
 
 void testVectorCapacity(UnitTest unit) {
 	ft::vector<std::string> vec;
