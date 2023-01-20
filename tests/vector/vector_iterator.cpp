@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-void testConstructors(UnitTest& unit) {
+static void testConstructors(UnitTest& unit) {
 	ft::vector<int>::iterator it;
 	ft::vector<int>::iterator it2(it);
 
@@ -22,7 +22,7 @@ void testConstructors(UnitTest& unit) {
 	delete[] p;
 }
 
-void testIncrementedDecremented(UnitTest& unit) {
+static void testIncrementedDecremented(UnitTest& unit) {
 	int *p = new int[5];
 	bool equal = true;
 
@@ -62,7 +62,7 @@ void testIncrementedDecremented(UnitTest& unit) {
 	delete[] p;
 }
 
-void offsetDereferenceOperator(UnitTest& unit) {
+static void testOffSetDereferenceOperator(UnitTest& unit) {
 	int *p = new int[5];
 	bool equal = true;
 
@@ -77,7 +77,7 @@ void offsetDereferenceOperator(UnitTest& unit) {
 	delete[] p;
 }
 
-void TestCompoundAssignmentOperations(UnitTest& unit) {
+static void testCompoundAssignmentOperations(UnitTest& unit) {
 	std::string *names = arraySet();
 	ft::vector<std::string>::iterator it(names);
 	it += 3;
@@ -90,7 +90,7 @@ void TestCompoundAssignmentOperations(UnitTest& unit) {
 	delete[] names;
 }
 
-void testCompareOperators(UnitTest& unit) {
+static void testCompareOperators(UnitTest& unit) {
 	
 	int *p = new int[5];
 
@@ -114,4 +114,12 @@ void testCompareOperators(UnitTest& unit) {
 	unit.assertTrue(it <= it + 1, "Expected: True, it <= it + 1 ");
 	unit.assertFalse(it + 1 <= it, "Expected: False, it + 1 <= it");
 	delete[] p;
+}
+
+void vector_iterator(UnitTest& unit) {
+	testCompareOperators(unit);
+	testCompoundAssignmentOperations(unit);
+	testIncrementedDecremented(unit);
+	testOffSetDereferenceOperator(unit);
+	testConstructors(unit);
 }

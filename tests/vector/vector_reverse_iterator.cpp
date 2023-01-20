@@ -5,7 +5,7 @@ struct Lenzo {
 	std::string pera;
 };
 
-void reverseDereference(UnitTest& unit) {
+static void testDereference(UnitTest& unit) {
 	Lenzo numbers[2];
 	numbers[0].pera = "pera1";
 	numbers[1].pera = "pera2";
@@ -19,7 +19,7 @@ void reverseDereference(UnitTest& unit) {
 	unit.assertTrue((rit + 1)->pera == it->pera, "Expected: True; rit(it + 2), (rit + 1)->pera == it->pera");
 }
 
-void reverseBaseFunction(UnitTest& unit) {
+static void testBaseFunction(UnitTest& unit) {
 	int *p = new int[5];
 	for (int i = 0; i < 5; i++) { p[i] = i<<1; }
 	ft::vector<int>::iterator it(p);
@@ -31,7 +31,7 @@ void reverseBaseFunction(UnitTest& unit) {
 	delete[] p;
 }
 
-void reverseOffsetDereferenceOperator(UnitTest& unit) {
+static void testOffSetDereferenceOperator(UnitTest& unit) {
 	int *p = new int[5];
 	bool equal = true;
 
@@ -48,7 +48,7 @@ void reverseOffsetDereferenceOperator(UnitTest& unit) {
 	delete[] p;
 }
 
-void testReverseIteratorIncrementedDecremented(UnitTest& unit) {
+static void testIteratorIncrementedDecremented(UnitTest& unit) {
 	int *p = new int[5];
 	int *tmp = p;
 	bool equal = true;
@@ -94,13 +94,8 @@ void testReverseIteratorIncrementedDecremented(UnitTest& unit) {
 	delete[] tmp;
 }
 
-void rerverseCompoundAssignmentOperations(UnitTest& unit) {
-	std::string *names = new std::string[5];
-	names[0] = "Luigi";
-	names[1] = "Caio";
-	names[2] = "Rafa";
-	names[3] = "Adrian";
-	names[4] = "Gustavo";
+static void testCompoundAssignmentOperations(UnitTest& unit) {
+	std::string *names = arraySet();
 	ft::vector<std::string>src(names, names + 5);
 	ft::vector<std::string>::reverse_iterator it(src.end());
 	it += 3;
@@ -111,4 +106,12 @@ void rerverseCompoundAssignmentOperations(UnitTest& unit) {
 	unit.assertTrue(!(*it).compare("Adrian"), "Expected: True; it -= 2, *it == Adrian");
 	unit.assertFalse(!(*it).compare("Gustavo"), "Expected: False; it -= 2, *it == Gustavo");
 	delete[] names;
+}
+
+void vector_reverse_iterator(UnitTest& unit) {
+	testCompoundAssignmentOperations(unit);
+	testIteratorIncrementedDecremented(unit);
+	testOffSetDereferenceOperator(unit);
+	testDereference(unit);
+	testBaseFunction(unit);
 }

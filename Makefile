@@ -2,17 +2,21 @@ FT_NAME := ft_containers
 STD_NAME := std_containers
 CC := c++
 CFLAGS := -Wall -Wextra -Werror -g -std=c++98 -Wfatal-errors -pedantic-errors# -fsanitize=address 
-
+# 
 MAIN = main.cpp
 
+
 TESTDIRS := normal_iterator/ func/ vector/
-VPATH = $(addprefix tests/, $(TESTDIRS))
+VPATH = tests/ $(addprefix tests/, $(TESTDIRS))
 
-AAAA := vector_elements_access.cpp vector_constructors.cpp
+V_ITERATORS := vector_iterator.cpp vector_reverse_iterator.cpp \
+	vector_modifiers.cpp vector_elements_access.cpp \
+	vector_constructors.cpp \
+	aux.cpp
 
-VECTOR_SRCS := vector_iterator.cpp vector_reverse_iterator.cpp vector_modifiers.cpp $(AAAA)
+VECTOR_SRCS := $(V_ITERATORS)
 
-SRCS :=  vector_members_functions.cpp $(VECTOR_SRCS)
+SRCS :=  $(VECTOR_SRCS)
 OBJDIR := ./objs/
 
 FT_OBJS := $(addprefix $(OBJDIR)ft_, $(notdir $(SRCS:.cpp=.o)))

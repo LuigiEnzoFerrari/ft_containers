@@ -1,16 +1,6 @@
 #include "tests.hpp"
 
-std::string *arraySet( void ) {
-	std::string *names = new std::string[5];
-	names[0] = "Luigi";
-	names[1] = "Caio";
-	names[2] = "Rafa";
-	names[3] = "Adrian";
-	names[4] = "Gustavo";
-	return (names);
-}
-
-void testVectorClear(UnitTest& unit) {
+void testClear(UnitTest& unit) {
 	std::string *names = arraySet();
 	ft::vector<std::string> vec(names, names + 5);
 	vec.clear();
@@ -18,7 +8,7 @@ void testVectorClear(UnitTest& unit) {
 	unit.assertTrue(vec.capacity() == 5, "vec.capacity() == 4");
 }
 
-void 	testVectorEraseRange(UnitTest& unit) {
+void 	testEraseRange(UnitTest& unit) {
 	std::string *names = arraySet();
 
 	{
@@ -41,7 +31,7 @@ void 	testVectorEraseRange(UnitTest& unit) {
 	}
 }
 
-void testVectorErase(UnitTest& unit) {
+void testErase(UnitTest& unit) {
 	std::string *names = arraySet();
 
 	{
@@ -72,7 +62,7 @@ void testVectorErase(UnitTest& unit) {
 	}
 }
 
-void testVectorInsertSingleElement(UnitTest& unit) 	{
+void testInsertSingleElement(UnitTest& unit) 	{
 	std::string *names = arraySet();
 	ft::vector<std::string> vec(names, names + 5);
 
@@ -96,7 +86,7 @@ void testVectorInsertSingleElement(UnitTest& unit) 	{
 	unit.assertTrue(vec2.capacity() == 2, "vec2.capacity() == 2");
 }
 
-void testVectorInsertFillElements(UnitTest &unit) {
+void testInsertFillElements(UnitTest &unit) {
 	std::string *names = arraySet();
 	{
 		ft::vector<std::string> vec;
@@ -128,7 +118,7 @@ void testVectorInsertFillElements(UnitTest &unit) {
 	}
 }
 
-void testVectorInsertRange(UnitTest& unit) {
+void testInsertRange(UnitTest& unit) {
 	std::string *names = arraySet();
 	{
 		ft::vector<std::string> vec;
@@ -159,7 +149,7 @@ void testVectorInsertRange(UnitTest& unit) {
 	delete[] names;
 }
 
-void testVectorPopBack(UnitTest& unit) {
+void testPopBack(UnitTest& unit) {
 	std::string *names = arraySet();
 	ft::vector<std::string> vec(names, names + 1);
 	vec.pop_back();
@@ -181,7 +171,7 @@ void testVectorPopBack(UnitTest& unit) {
 	delete[] names;
 }
 
-void testVectorPushBack(UnitTest& unit) {
+void testPushBack(UnitTest& unit) {
 	std::string *names = arraySet();
 	ft::vector<std::string> vec;
 
@@ -200,3 +190,49 @@ void testVectorPushBack(UnitTest& unit) {
 
 	delete[] names;
 }
+
+void vector_modifiers(UnitTest& unit) {
+	testPushBack(unit);
+	testPopBack(unit);
+	testInsertRange(unit);
+	testInsertFillElements(unit);
+	testInsertSingleElement(unit);
+	testErase(unit);
+	testEraseRange(unit);
+}
+
+// void testVectorModifiers(UnitTest& unit) {
+// 	std::string *names = arraySet();
+// 	ft::vector<std::string> vec(names, names + 5) ;
+// 	vec.assign(3, "Victor");
+// 	bool equal = true;
+// 	for (size_t i = 0; i < 3; i++) {
+// 		if(std::string("Victor").compare(vec[i]) != 0) {
+// 			equal = false;
+// 			break ;
+// 		}
+// 	}
+// 	unit.assertTrue(equal, "Expected: True; i < 10 vec[i] == Victor");
+
+// 	vec.assign(10, "Victor");
+// 	for (size_t i = 0; i < 10; i++) {
+// 		if(std::string("Victor").compare(vec[i]) != 0) {
+// 			equal = false;
+// 			break ;
+// 		}
+// 	}
+// 	unit.assertTrue(equal, "Expected: True; i < 10 vec[i] == Victor");
+// 	unit.assertTrue(vec.size() == 10, "vec.size() == 10");
+// 	unit.assertTrue(vec.capacity() == 10, "vec.size() == 10");
+// 	ft::vector<std::string> vec2(names, names + 5);
+// 	vec.assign(vec2.begin() + 2, vec2.begin() + 4);
+// 	size_t i = 0;
+// 	for (
+// 		ft::vector<std::string>::iterator it = vec.begin(); it < vec.begin() + 2; it++, i++) {
+// 		if((*it).compare(names[i])) {
+// 			equal = false;
+// 			break ;
+// 		}
+// 	}
+// 	delete[] names;
+// }

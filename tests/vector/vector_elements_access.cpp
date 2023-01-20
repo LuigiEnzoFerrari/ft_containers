@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-void testVectorElementsAcess(UnitTest& unit) {
+void testElementsAcess(UnitTest& unit) {
 	std::string *names = arraySet();
 	{
 		ft::vector<std::string> vec(names, names + 5);
@@ -41,4 +41,8 @@ void testVectorElementsAcess(UnitTest& unit) {
 		const std::string& name = vec.back();
 		unit.assertTrue(name == names[4], "name == names[4]");
 	}
+}
+
+void vector_elements_access(UnitTest& unit) {
+	testElementsAcess(unit);
 }

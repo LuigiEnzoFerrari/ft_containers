@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-void testVectorConstructors(UnitTest& unit) {
+void testConstructors(UnitTest& unit) {
 	std::string *names = arraySet();
 	{
 		ft::vector<std::string> vec;
@@ -32,4 +32,8 @@ void testVectorConstructors(UnitTest& unit) {
 		unit.assertTrue(vec.size() == 4, "size == 4");
 		unit.assertTrue(vec.capacity() == 4, "capacity == 4");
 	}
+}
+
+void vector_constructors(UnitTest& unit) {
+	testConstructors(unit);
 }

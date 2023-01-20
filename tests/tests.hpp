@@ -10,6 +10,14 @@
 
 #include <cstring>
 #include "./include/UnitTest.hpp"
-#include "./include/test_stl_vector.hpp"
+
+/*
+** TESTS_STL_VECTOR
+*/
 std::string *arraySet( void );
+void vector_iterator(UnitTest& unit);
+void vector_reverse_iterator(UnitTest& unit);
+void vector_modifiers(UnitTest& unit);
+void vector_elements_access(UnitTest& unit);
+void vector_constructors(UnitTest& unit);
 #endif

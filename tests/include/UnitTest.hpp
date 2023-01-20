@@ -1,8 +1,8 @@
 #ifndef UNITEST_HPP
 #define UNITEST_HPP
 #include <iostream>
+#include <vector>
 #include <cstring>
-
 
 #define RESET_COLOR "\033[0m" 
 
@@ -14,6 +14,24 @@
 #define TEST_SUITE_TEST_COLOR "\033[0m"
 #define TEST_SUITE_TEST " Test"
 
+class UnitTest;
+
+class Node {
+public:
+	void (*data)(UnitTest&);
+	Node* next;
+	std::string name;
+};
+
+class Asserts {
+	public:
+		Asserts( void ) {};
+		virtual ~Asserts( void ) {};
+		virtual void assertFalse(bool condition) const = 0;
+		virtual void assertTrue(bool condition) const = 0;
+
+};
+
 class UnitTest {
 	private:
 		std::string _assert_fail;
@@ -21,52 +39,36 @@ class UnitTest {
 		std::string _assert_color_fail;
 		std::string _assert_color_pass;
 		size_t _total;
-		size_t _fail;
+		size_t _passed;
+		Node *_suits;
 		bool _mode;
-
+		int _exit_code;
 	public:
-		UnitTest(
-			std::string assert_fail = "Fail",
-			std::string assert_pass = "Pass",
-			std::string assert_color_fail = "\033[31m",
-			std::string assert_color_pass = "\033[32m"):
+		UnitTest( std::string assert_fail = "Fail",
+			std::string assert_pass = "Pass"):
 			_assert_fail(assert_fail),
 			_assert_pass(assert_pass),
-			_assert_color_fail(assert_color_fail),
-			_assert_color_pass(assert_color_pass),
-			_total(0), _fail(0), _mode(false) {
+			_total(0), _passed(0),
+			_suits(NULL), _exit_code(0) {
+			this->_assert_color_pass = "\033[32m";
+			this->_assert_color_fail =  "\033[31m";
+			this->_mode = true;
 		};
 
 		~UnitTest( void ) {
-			std::cout << _total << "/" << _fail << std::endl;
 		};
-		void setAll(std::string assert_fail = "",
-			std::string assert_pass = "",
-			std::string assert_color_fail = "",
-			std::string assert_color_pass = "" ) {
-			this->_assert_fail = assert_fail != "" ? assert_fail : this->_assert_fail;
-			this->_assert_pass = assert_pass != "" ? assert_pass : this->_assert_pass;
-			this->_assert_color_fail = assert_color_fail != "" ? assert_color_fail : this->_assert_color_fail;
-			this->_assert_color_pass = assert_color_pass != "" ? assert_color_pass : this->_assert_color_pass;
 
-		}
-		bool getMode( void ) const {
-			return (_mode);
-		}
-		void setMode( bool mode) {
-			_mode = mode;
-		}
 		void assertTrue(bool condition, std::string message = "") {
 			std::ostream* output_stream;
 			
 			message = !message.compare("") ? message : " " + message;
 			output_stream = condition ?  &std::cerr : &std::cout;
-			_fail = condition ?  _fail : _fail + 1;
+			_passed = condition ? _passed + 1 : _passed;
 			_total++;
 			std::string result = condition ? _assert_pass : _assert_fail;
 			std::string color = condition ? _assert_color_pass : _assert_color_fail;
 
-			if (_mode) {
+			if (!_mode) {
 				*output_stream << color << result << RESET_COLOR << message << std::endl;
 			} else {
 				*output_stream << color << "# " << RESET_COLOR;
@@ -100,32 +102,73 @@ class UnitTest {
 		void assertEqual(const T* actual, const T* expected, std::string message) {
 			assertTrue(actual == expected, message);
 		};
-};
 
-typedef void (*testlist[])(UnitTest&);
-template <typename T, std::size_t N>
-T* end(T(&arr)[N])
-{
-    return arr + N;
-}
-template <typename T, std::size_t N>
-T* begin(T(&arr)[N])
-{
-    return arr;
-}
-
-template <typename T, std::size_t N>
-void testSuite(std::string name, T(&suit)[N], UnitTest unit = UnitTest()) {
-	size_t n = end(suit) - begin(suit);
-	unit.setMode(true);
-	std::cout << TEST_SUITE_NAME_COLOR << name << RESET_COLOR << std::endl;
-	for(size_t i = 0; i < n; i++) {
-		if (unit.getMode()) {
-			std::cout << (i + 1) << TEST_SUITE_TEST_COLOR << TEST_SUITE_TEST << "\n";
+		void setMode( bool mode ) {
+			_mode = mode;
 		}
-		suit[i](unit);
-		std::cout << RESET_COLOR;
-	};
-}
+
+		int exitStatus( void ) {
+			if (_exit_code) {
+				return (1);
+			} else {
+				return (0);
+			}
+		}
+
+		void addSuit(void (*data)(UnitTest&), std::string name) {
+			if (_suits == NULL) {
+				_suits = new Node();
+				_suits->data = data;
+				_suits->name = name;
+				_suits->next = NULL;
+			} else {
+				Node* current = _suits;
+				while (current->next != NULL) {
+					current = current->next;
+				}
+				current->next = new Node();
+				current->next->data = data;
+				current->next->name = name;
+				current->next->next = NULL;
+			}
+		}
+
+		void run(void) {
+			Node* current = _suits;
+			while (current != NULL) {
+				run(current);
+				current = current->next;
+			}
+			if (_passed < _total) {
+				_exit_code = 1;
+			}
+		}
+
+		void run(Node* suit) {
+			std::cout << suit->name << std::endl;
+			suit->data(*this);
+			if (_mode) {
+				std::cout << std::endl;
+			}
+		}
+
+		void clear( void ) {
+			Node *current = _suits;
+			Node *next = NULL;
+			while (current != NULL) {
+				next = current->next;
+				delete current;
+				current = next;
+			}
+			_suits = NULL;
+			_total = 0;
+			_passed = 0;
+		}
+
+		void status( void ) {
+			std::cout << _passed << "/" << _total << std::endl;
+		}
+
+};
 
 #endif
