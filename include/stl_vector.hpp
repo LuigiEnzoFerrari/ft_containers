@@ -101,17 +101,19 @@ namespace ft {
 			bool empty() const {return (_size == 0);};
 		
 			void reserve (size_type n) {
-				if (n > _capacity) {
-					value_type *tmp;
-					_capacity = n;
-					tmp = _alloc.allocate(_capacity);
-					for (size_type i = 0; i < _size; i++)
-						_alloc.construct(&tmp[i], p[i]);
-					for (size_type i = 0; i < _size; i++)
-						_alloc.destroy(&p[i]);
-					_alloc.deallocate(p, this->capacity());
-					p = tmp;
+				if (n <= _capacity) {
+					return ;
 				}
+				value_type *tmp;
+
+				_capacity = n;
+				tmp = _alloc.allocate(_capacity);
+				for (size_type i = 0; i < _size; i++) {
+					_alloc.construct(&tmp[i], p[i]);
+					_alloc.destroy(&p[i]);
+				}
+				_alloc.deallocate(p, this->capacity());
+				p = tmp;
 			};
 
 			reference operator[] (size_type n){return (p[n]);};
@@ -182,32 +184,43 @@ namespace ft {
 				_size--;
 			}
 		};
-        iterator insert(iterator position, const value_type& val) {
-            size_type i = 0;
-            for (iterator it = begin(); it != position; it++)
-                i++;
-            if (_size == _capacity) {
-                if (_capacity == 0)
-                    reserve(1);
-                else
-                    reserve(_capacity * 2);
-                position = iterator(&p[i]);
-            }
-            // _alloc.construct(&(*end()), val);
-            for (iterator it = end(); position != it; it--)
-                *it = *(it - 1);
-            _alloc.construct(&(*position), val);
-            _size++;
-            return (position);
-        }
+		iterator insert(iterator position, const value_type& val) {
+			size_type i = ft::distance(begin(), position);
+			if (_capacity) {
+				if (_size == _capacity) {
+					reserve(_capacity << 1);
+				}
+			}
+			else {
+				reserve(1);
+			}
+			position = iterator(&p[i]);
+			for (iterator it = end(); position != it; it--)
+				*it = *(it - 1);
+			_alloc.construct(&(*position), val);
+			_size++;
+			return (position);
+		}
+
 		void insert(iterator position, size_type n, const value_type& val) {
+			if (_capacity  == 0) {
+				reserve(n);
+				position = begin();
+			}
 			for(size_type i = 0; i < n; i++)
 				position = insert(position, val);
 		};
+
 		template <class InputIterator>
 		void insert(iterator position, InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last) {
-			   for (; first != last; first++) {
+				difference_type i= ft::distance(first, last);
+				if (_capacity  == 0) {
+					reserve(i);
+					position = begin();
+				}
+				for (; first != last; first++) {
 					position = insert(position, *first);
+					position++;
 			   }
 		}
 		iterator erase(iterator position) {

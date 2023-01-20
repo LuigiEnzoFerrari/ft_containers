@@ -20,4 +20,6 @@ void vector_reverse_iterator(UnitTest& unit);
 void vector_modifiers(UnitTest& unit);
 void vector_elements_access(UnitTest& unit);
 void vector_constructors(UnitTest& unit);
+void vector_capacity(UnitTest& unit);
+
 #endif

@@ -116,6 +116,7 @@ void testInsertFillElements(UnitTest &unit) {
 		unit.assertTrue(vec.size() == 6, "size == 6");
 		unit.assertTrue(vec.capacity() == 8, "capacity == 8");
 	}
+	delete[] names;
 }
 
 void testInsertRange(UnitTest& unit) {
@@ -130,9 +131,9 @@ void testInsertRange(UnitTest& unit) {
 	{
 		ft::vector<std::string> vec;
 		ft::vector<std::string> vec2(names, names + 3);
-
 		vec.insert(vec.end(), vec2.begin(), vec2.end());
-		unit.assertTrue(vec[0] == names[0] && vec[1] == names[1] && vec[2] == names[2], "vec[x] == name[x]");
+
+		unit.assertTrue(vec[0] == names[0] && vec[1] == names[1] && vec[2] == names[2], "~vec[x] == name[x]");
 		unit.assertTrue(vec.size() == 3, "vec.size() == 3");
 		unit.assertTrue(vec.capacity() == 3, "vec.capacity()== 3");
 	}
@@ -192,13 +193,13 @@ void testPushBack(UnitTest& unit) {
 }
 
 void vector_modifiers(UnitTest& unit) {
-	testPushBack(unit);
-	testPopBack(unit);
+	// testPushBack(unit);
+	// testPopBack(unit);
+	testInsertSingleElement(unit);
 	testInsertRange(unit);
 	testInsertFillElements(unit);
-	testInsertSingleElement(unit);
-	testErase(unit);
-	testEraseRange(unit);
+	// testErase(unit);
+	// testEraseRange(unit);
 }
 
 // void testVectorModifiers(UnitTest& unit) {

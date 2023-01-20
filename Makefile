@@ -11,7 +11,7 @@ VPATH = tests/ $(addprefix tests/, $(TESTDIRS))
 
 V_ITERATORS := vector_iterator.cpp vector_reverse_iterator.cpp \
 	vector_modifiers.cpp vector_elements_access.cpp \
-	vector_constructors.cpp \
+	vector_constructors.cpp vector_capacity.cpp\
 	aux.cpp
 
 VECTOR_SRCS := $(V_ITERATORS)

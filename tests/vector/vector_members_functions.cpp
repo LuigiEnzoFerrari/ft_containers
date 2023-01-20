@@ -1,7 +1,5 @@
 #include "tests.hpp"
 
-
-
 void testVectorCapacity(UnitTest& unit) {
 	ft::vector<std::string> vec;
 	std::string *names = arraySet();
