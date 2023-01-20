@@ -5,7 +5,7 @@ struct Lenzo {
 	std::string pera;
 };
 
-void reverseDereference(UnitTest unit) {
+void reverseDereference(UnitTest& unit) {
 	Lenzo numbers[2];
 	numbers[0].pera = "pera1";
 	numbers[1].pera = "pera2";
@@ -19,7 +19,7 @@ void reverseDereference(UnitTest unit) {
 	unit.assertTrue((rit + 1)->pera == it->pera, "Expected: True; rit(it + 2), (rit + 1)->pera == it->pera");
 }
 
-void reverseBaseFunction(UnitTest unit) {
+void reverseBaseFunction(UnitTest& unit) {
 	int *p = new int[5];
 	for (int i = 0; i < 5; i++) { p[i] = i<<1; }
 	ft::vector<int>::iterator it(p);
@@ -31,7 +31,7 @@ void reverseBaseFunction(UnitTest unit) {
 	delete[] p;
 }
 
-void reverseOffsetDereferenceOperator(UnitTest unit) {
+void reverseOffsetDereferenceOperator(UnitTest& unit) {
 	int *p = new int[5];
 	bool equal = true;
 
@@ -48,7 +48,7 @@ void reverseOffsetDereferenceOperator(UnitTest unit) {
 	delete[] p;
 }
 
-void testReverseIteratorIncrementedDecremented(UnitTest unit) {
+void testReverseIteratorIncrementedDecremented(UnitTest& unit) {
 	int *p = new int[5];
 	int *tmp = p;
 	bool equal = true;
@@ -94,7 +94,7 @@ void testReverseIteratorIncrementedDecremented(UnitTest unit) {
 	delete[] tmp;
 }
 
-void rerverseCompoundAssignmentOperations(UnitTest unit) {
+void rerverseCompoundAssignmentOperations(UnitTest& unit) {
 	std::string *names = new std::string[5];
 	names[0] = "Luigi";
 	names[1] = "Caio";
@@ -108,7 +108,6 @@ void rerverseCompoundAssignmentOperations(UnitTest unit) {
 	unit.assertFalse(!(*it).compare("Rafa"), "Expected: Fase; it += 3, *it == Rafa");
 
 	it -= 2;
-	std::cout << *it << std::endl;
 	unit.assertTrue(!(*it).compare("Adrian"), "Expected: True; it -= 2, *it == Adrian");
 	unit.assertFalse(!(*it).compare("Gustavo"), "Expected: False; it -= 2, *it == Gustavo");
 	delete[] names;

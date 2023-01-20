@@ -1,16 +1,7 @@
 #include "tests.hpp"
-static std::string *arraySet( void ) {
-	std::string *names = new std::string[5];
-	names[0] = "Luigi";
-	names[1] = "Caio";
-	names[2] = "Rafa";
-	names[3] = "Adrian";
-	names[4] = "Gustavo";
-	return (names);
-}
 
 
-void testVectorModifiers(UnitTest unit) {
+void testVectorModifiers(UnitTest& unit) {
 	std::string *names = arraySet();
 	ft::vector<std::string> vec(names, names + 5) ;
 	vec.assign(3, "Victor");
@@ -46,8 +37,7 @@ void testVectorModifiers(UnitTest unit) {
 	delete[] names;
 }
 
-
-void testVectorCapacity(UnitTest unit) {
+void testVectorCapacity(UnitTest& unit) {
 	ft::vector<std::string> vec;
 	std::string *names = arraySet();
 
@@ -66,11 +56,10 @@ void testVectorCapacity(UnitTest unit) {
 	std::vector<std::string> originalvec;
 	originalvec.resize(6);
 	unit.assertTrue(vec.max_size() == originalvec.max_size());
-	std::cout << vec.max_size() << "   " << originalvec.max_size() << std::endl;
 	delete[] names;
 }
 
-void testVectorIterator(UnitTest unit) {
+void testVectorIterator(UnitTest& unit) {
 	std::string *names = arraySet();
 	ft::vector<std::string> vec(names, names + 5);
 	ft::vector<std::string>::iterator it;

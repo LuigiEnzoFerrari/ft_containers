@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-void testConstructors(UnitTest unit) {
+void testConstructors(UnitTest& unit) {
 	ft::vector<int>::iterator it;
 	ft::vector<int>::iterator it2(it);
 
@@ -22,7 +22,7 @@ void testConstructors(UnitTest unit) {
 	delete[] p;
 }
 
-void testIncrementedDecremented(UnitTest unit) {
+void testIncrementedDecremented(UnitTest& unit) {
 	int *p = new int[5];
 	bool equal = true;
 
@@ -62,7 +62,7 @@ void testIncrementedDecremented(UnitTest unit) {
 	delete[] p;
 }
 
-void offsetDereferenceOperator(UnitTest unit) {
+void offsetDereferenceOperator(UnitTest& unit) {
 	int *p = new int[5];
 	bool equal = true;
 
@@ -77,13 +77,8 @@ void offsetDereferenceOperator(UnitTest unit) {
 	delete[] p;
 }
 
-void TestCompoundAssignmentOperations(UnitTest unit) {
-	std::string *names = new std::string[5];
-	names[0] = "Luigi";
-	names[1] = "Caio";
-	names[2] = "Rafa";
-	names[3] = "Adrian";
-	names[4] = "Gustavo";
+void TestCompoundAssignmentOperations(UnitTest& unit) {
+	std::string *names = arraySet();
 	ft::vector<std::string>::iterator it(names);
 	it += 3;
 	unit.assertTrue(!(*it).compare("Adrian"), "Expected: True; it += 3, *it == Adrian");
@@ -95,7 +90,7 @@ void TestCompoundAssignmentOperations(UnitTest unit) {
 	delete[] names;
 }
 
-void testCompareOperators(UnitTest unit) {
+void testCompareOperators(UnitTest& unit) {
 	
 	int *p = new int[5];
 
