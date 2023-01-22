@@ -10,7 +10,6 @@ void testElementsAcess(UnitTest& unit) {
 		unit.assertTrue(vec[3] == "Victor");
 	}
 	{
-		//assert to confirm the value at function was a const
 		ft::vector<std::string> const vec(names, names + 5);
 		const std::string& name = vec.at(2);
 		unit.assertTrue(name == names[2], "name == names[2]");
@@ -36,11 +35,12 @@ void testElementsAcess(UnitTest& unit) {
 		unit.assertTrue(vec[4] == "Victor");
 	}
 	{
-		//assert to confirm the value at function was a const
 		ft::vector<std::string> const vec(names, names + 5);
 		const std::string& name = vec.back();
 		unit.assertTrue(name == names[4], "name == names[4]");
 	}
+	delete[] names;
+	
 }
 
 void vector_elements_access(UnitTest& unit) {

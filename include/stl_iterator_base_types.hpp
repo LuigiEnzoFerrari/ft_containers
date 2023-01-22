@@ -1,6 +1,5 @@
 #ifndef STL_ITERATOR_BASE_TYPES_HPP
 #define STL_ITERATOR_BASE_TYPES_HPP
-#include <iterator>
 
 namespace ft {
 	struct input_iterator_tag { };

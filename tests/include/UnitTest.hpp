@@ -75,6 +75,16 @@ class UnitTest {
 			}
 		};
 
+		template <typename T, typename U>
+		void assertArrayEquals(T &x, U &y, size_t n) {
+			for (size_t i = 0; i < n; i++) {
+				if (x[i] != y[i]) {
+					assertTrue(false);
+				}
+			}
+			assertTrue(true);
+		};
+
 		void assertFalse(bool condition) {
 			assertTrue(!condition);
 		};

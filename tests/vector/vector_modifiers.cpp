@@ -29,6 +29,7 @@ void 	testEraseRange(UnitTest& unit) {
 		unit.assertTrue(vec.size() == 0, "vec.size() == 0");
 		unit.assertTrue(vec.capacity() == 0, "vec.capacity() == 0");
 	}
+	delete[] names;
 }
 
 void testErase(UnitTest& unit) {
@@ -60,12 +61,12 @@ void testErase(UnitTest& unit) {
 		}
 		unit.assertTrue(equal, "vec[i] == names[i + 1]");
 	}
+	delete[] names;
 }
 
 void testInsertSingleElement(UnitTest& unit) 	{
 	std::string *names = arraySet();
 	ft::vector<std::string> vec(names, names + 5);
-
 	vec.insert(vec.begin() + 2, names[0]);
 
 	unit.assertTrue(vec[2] == "Luigi", "vec[2] == Luigi");
@@ -84,6 +85,7 @@ void testInsertSingleElement(UnitTest& unit) 	{
 	unit.assertTrue(vec2[1] == "Rafa", "vec2[1] == Rafa");
 	unit.assertTrue(vec2.size() == 2, "vec2.size() == 2");
 	unit.assertTrue(vec2.capacity() == 2, "vec2.capacity() == 2");
+	delete[] names;
 }
 
 void testInsertFillElements(UnitTest &unit) {
@@ -141,10 +143,10 @@ void testInsertRange(UnitTest& unit) {
 		ft::vector<std::string> vec(names, names + 3);
 		ft::vector<std::string> vec2(names + 3, names + 5);
 
-		vec.insert(vec.begin() + 2,vec2.begin(), vec2.end());
+		vec.insert(vec.begin() + 2, vec2.begin(), vec2.end());
 
 		unit.assertTrue(vec[2] == vec2[0] && vec[3] == vec2[1], "vec[x] == name[x]");
-		unit.assertTrue(vec.size() == 5, "vec.size() == 4");
+		unit.assertTrue(vec.size() == 5, "vec.size() == 5");
 		unit.assertTrue(vec.capacity() == 6, "vec.capacity()== 6");
 	}
 	delete[] names;
@@ -192,48 +194,70 @@ void testPushBack(UnitTest& unit) {
 	delete[] names;
 }
 
+void testAssignRange(UnitTest& unit) {
+	std::string *names = arraySet();
+	ft::vector<std::string> vect(names, names + 5);
+	{
+		ft::vector<std::string> vec;
+		vec.assign(vect.begin(), vect.begin());
+		
+		unit.assertTrue(vec.size() == 0, "Assign 0");
+		unit.assertTrue(vec.capacity() == 0, "Assign 0");
+	}
+	{
+		ft::vector<std::string> vec;
+		vec.assign(vect.begin(), vect.end());
+		
+		unit.assertTrue(vec.size() == 5, "Assign 5");
+		unit.assertTrue(vec.capacity() == 5, "Assign 5");
+		bool equal = true;
+		for(size_t i = 0; i < vec.size(); i++) {
+			if(vec[i] != vect[i]) {
+				equal = false;
+			}
+		}
+		unit.assertTrue(equal, "wwwwww");
+	}
+	{
+		ft::vector<std::string> vec(names, names + 5);
+		vec.assign(vect.begin(), vect.begin() + 3);
+		
+		unit.assertTrue(vec.size() == 3, "Assign 3");
+		unit.assertTrue(vec.capacity() == 5, "Assign 5");
+		bool equal = true;
+		for(size_t i = 0; i < vec.size(); i++) {
+			std::cout << vec[i] << std::endl;
+			if(vec[i] != vect[i]) {
+				equal = false;
+			}
+		}
+		unit.assertTrue(equal, "osdijf");
+	}
+	{
+		ft::vector<std::string> vec(names, names + 5);
+		vec.assign(vec.begin() + 2, vec.begin() + 4);
+		
+		unit.assertTrue(vec.size() == 2, "Assign 2");
+		unit.assertTrue(vec.capacity() == 5, "Assign 5");
+		bool equal = true;
+		for(size_t i = 0; i < vec.size(); i++) {
+			std::cout << vec[i] << std::endl;
+			if(vec[i] != vect[i + 2]) {
+				equal = false;
+			}
+		}
+		unit.assertTrue(equal, "osdijf");
+	}
+	delete[] names;
+}
+
 void vector_modifiers(UnitTest& unit) {
-	// testPushBack(unit);
-	// testPopBack(unit);
+	testPushBack(unit);
+	testPopBack(unit);
 	testInsertSingleElement(unit);
 	testInsertRange(unit);
 	testInsertFillElements(unit);
-	// testErase(unit);
-	// testEraseRange(unit);
+	testErase(unit);
+	testEraseRange(unit);
+	testAssignRange(unit);
 }
-
-// void testVectorModifiers(UnitTest& unit) {
-// 	std::string *names = arraySet();
-// 	ft::vector<std::string> vec(names, names + 5) ;
-// 	vec.assign(3, "Victor");
-// 	bool equal = true;
-// 	for (size_t i = 0; i < 3; i++) {
-// 		if(std::string("Victor").compare(vec[i]) != 0) {
-// 			equal = false;
-// 			break ;
-// 		}
-// 	}
-// 	unit.assertTrue(equal, "Expected: True; i < 10 vec[i] == Victor");
-
-// 	vec.assign(10, "Victor");
-// 	for (size_t i = 0; i < 10; i++) {
-// 		if(std::string("Victor").compare(vec[i]) != 0) {
-// 			equal = false;
-// 			break ;
-// 		}
-// 	}
-// 	unit.assertTrue(equal, "Expected: True; i < 10 vec[i] == Victor");
-// 	unit.assertTrue(vec.size() == 10, "vec.size() == 10");
-// 	unit.assertTrue(vec.capacity() == 10, "vec.size() == 10");
-// 	ft::vector<std::string> vec2(names, names + 5);
-// 	vec.assign(vec2.begin() + 2, vec2.begin() + 4);
-// 	size_t i = 0;
-// 	for (
-// 		ft::vector<std::string>::iterator it = vec.begin(); it < vec.begin() + 2; it++, i++) {
-// 		if((*it).compare(names[i])) {
-// 			equal = false;
-// 			break ;
-// 		}
-// 	}
-// 	delete[] names;
-// }

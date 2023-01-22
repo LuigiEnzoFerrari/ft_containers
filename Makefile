@@ -1,7 +1,7 @@
 FT_NAME := ft_containers
 STD_NAME := std_containers
 CC := c++
-CFLAGS := -Wall -Wextra -Werror -g -std=c++98 -Wfatal-errors -pedantic-errors# -fsanitize=address 
+CFLAGS := -Wall -Wextra -Werror -g -std=c++98 -Wfatal-errors -pedantic-errors -fsanitize=address 
 # 
 MAIN = main.cpp
 
@@ -11,7 +11,8 @@ VPATH = tests/ $(addprefix tests/, $(TESTDIRS))
 
 V_ITERATORS := vector_iterator.cpp vector_reverse_iterator.cpp \
 	vector_modifiers.cpp vector_elements_access.cpp \
-	vector_constructors.cpp vector_capacity.cpp\
+	vector_constructors.cpp vector_capacity.cpp \
+	vector_not_member_functions.cpp \
 	aux.cpp
 
 VECTOR_SRCS := $(V_ITERATORS)

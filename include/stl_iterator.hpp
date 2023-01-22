@@ -1,8 +1,6 @@
 #ifndef STL_ITERATOR_HPP
 #define STL_ITERATOR_HPP
-#include <iterator>
 #include "stl_iterator_base_types.hpp"
-#include <iostream>
 
 namespace ft {
 	template <typename Iterator>
