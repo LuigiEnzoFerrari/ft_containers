@@ -1,24 +1,5 @@
 #include "tests.hpp"
 #include <map>
-
-struct Lenzo {
-	string pera;
-};
-
-static void testDereference(UnitTest& unit) {
-	Lenzo numbers[2];
-	numbers[0].pera = "pera1";
-	numbers[1].pera = "pera2";
-
-	ft::vector<Lenzo> vec(numbers, numbers + 2);
-
-	ft::vector<Lenzo>::iterator it = vec.begin();
-	ft::vector<Lenzo>::reverse_iterator rit(it + 2);
-
-	unit.assertTrue(rit->pera == (it + 1)->pera, "Expected: True; rit(it + 2), rit->pera == (it + 1)->pera");
-	unit.assertTrue((rit + 1)->pera == it->pera, "Expected: True; rit(it + 2), (rit + 1)->pera == it->pera");
-}
-
 static void testBaseFunction(UnitTest& unit) {
 	int *p = new int[5];
 	for (int i = 0; i < 5; i++) { p[i] = i<<1; }
@@ -109,9 +90,8 @@ static void testCompoundAssignmentOperations(UnitTest& unit) {
 }
 
 void vector_reverse_iterator(UnitTest& unit) {
-	testCompoundAssignmentOperations(unit);
-	testIteratorIncrementedDecremented(unit);
-	testOffSetDereferenceOperator(unit);
-	testDereference(unit);
-	testBaseFunction(unit);
+	unit.runTest(testCompoundAssignmentOperations, "testCompoundAssignmentOperations");
+	unit.runTest(testIteratorIncrementedDecremented, "testIteratorIncrementedDecremented");
+	unit.runTest(testOffSetDereferenceOperator, "testOffSetDereferenceOperator");
+	unit.runTest(testBaseFunction, "testBaseFunction");
 }

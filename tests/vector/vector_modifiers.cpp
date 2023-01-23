@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-void testClear(UnitTest& unit) {
+void	testClear(UnitTest& unit) {
 	string *names = arraySet();
 	ft::vector<string> vec(names, names + 5);
 	vec.clear();
@@ -8,7 +8,7 @@ void testClear(UnitTest& unit) {
 	unit.assertTrue(vec.capacity() == 5, "vec.capacity() == 4");
 }
 
-void 	testEraseRange(UnitTest& unit) {
+void	testEraseRange(UnitTest& unit) {
 	string *names = arraySet();
 
 	{
@@ -32,7 +32,7 @@ void 	testEraseRange(UnitTest& unit) {
 	delete[] names;
 }
 
-void testErase(UnitTest& unit) {
+void	testErase(UnitTest& unit) {
 	string *names = arraySet();
 
 	{
@@ -52,7 +52,7 @@ void testErase(UnitTest& unit) {
 	delete[] names;
 }
 
-void testInsertSingleElement(UnitTest& unit) 	{
+void	testInsertSingleElement(UnitTest& unit) 	{
 	string *names = arraySet();
 	ft::vector<string> vec(names, names + 5);
 	vec.insert(vec.begin() + 2, names[0]);
@@ -76,7 +76,7 @@ void testInsertSingleElement(UnitTest& unit) 	{
 	delete[] names;
 }
 
-void testInsertFillElements(UnitTest &unit) {
+void	testInsertFillElements(UnitTest &unit) {
 	string *names = arraySet();
 	{
 		ft::vector<string> vec;
@@ -109,7 +109,7 @@ void testInsertFillElements(UnitTest &unit) {
 	delete[] names;
 }
 
-void testInsertRange(UnitTest& unit) {
+void	testInsertRange(UnitTest& unit) {
 	string *names = arraySet();
 	{
 		ft::vector<string> vec;
@@ -140,7 +140,7 @@ void testInsertRange(UnitTest& unit) {
 	delete[] names;
 }
 
-void testPopBack(UnitTest& unit) {
+void	testPopBack(UnitTest& unit) {
 	string *names = arraySet();
 	{
 		ft::vector<string> vec(names, names + 1);
@@ -159,7 +159,7 @@ void testPopBack(UnitTest& unit) {
 	delete[] names;
 }
 
-void testPushBack(UnitTest& unit) {
+void	testPushBack(UnitTest& unit) {
 	string *names = arraySet();
 	ft::vector<string> vec;
 
@@ -179,50 +179,109 @@ void testPushBack(UnitTest& unit) {
 	delete[] names;
 }
 
-void testAssignRange(UnitTest& unit) {
+void	testAssignRange(UnitTest& unit) {
 	string *names = arraySet();
 	ft::vector<string> vect(names, names + 5);
 	{
 		ft::vector<string> vec;
 		vec.assign(vect.begin(), vect.begin());
 		
-		unit.assertTrue(vec.size() == 0, "Assign 0");
-		unit.assertTrue(vec.capacity() == 0, "Assign 0");
+		unit.assertTrue(vec.size() == 0, "vec.size() == 0");
+		unit.assertTrue(vec.capacity() == 0, "vec.capacity() == 0");
 	}
 	{
 		ft::vector<string> vec;
 		vec.assign(vect.begin(), vect.end());
 		
-		unit.assertTrue(vec.size() == 5, "Assign 5");
-		unit.assertTrue(vec.capacity() == 5, "Assign 5");
-		unit.assertTrue(ft::equal(vec.begin(), vec.end(), names), "wwwwww");
+		unit.assertTrue(vec.size() == 5, "vec.size() == 5");
+		unit.assertTrue(vec.capacity() == 5, "vec.capacity() == 5");
+		unit.assertTrue(ft::equal(vec.begin(), vec.end(), names), "ft::equal(vec.begin(), vec.end(), names)");
 	}
 	{
 		ft::vector<string> vec(names, names + 5);
 		vec.assign(vect.begin(), vect.begin() + 3);
 		
-		unit.assertTrue(vec.size() == 3, "Assign 3");
-		unit.assertTrue(vec.capacity() == 5, "Assign 5");
-		unit.assertTrue(ft::equal(vec.begin(), vec.end(), names), "osdijf");
+		unit.assertTrue(vec.size() == 3, "vec.size() == 3");
+		unit.assertTrue(vec.capacity() == 5, "vec.capacity() == 5");
+		unit.assertTrue(ft::equal(vec.begin(), vec.end(), names), "ft::equal(vec.begin(), vec.end(), names)");
 	}
 	{
 		ft::vector<string> vec(names, names + 5);
 		vec.assign(vec.begin() + 2, vec.begin() + 4);
 		
-		unit.assertTrue(vec.size() == 2, "Assign 2");
-		unit.assertTrue(vec.capacity() == 5, "Assign 5");
-		unit.assertTrue(ft::equal(vec.begin() + 2 , vec.begin() + 4, names + 2));
+		unit.assertTrue(vec.size() == 2, "vec.size() == 2");
+		unit.assertTrue(vec.capacity() == 5, "vec.capacity() == 5");
+		unit.assertTrue(ft::equal(vec.begin() + 2 , vec.begin() + 4, names + 2), "ft::equal(vec.begin() + 2 , vec.begin() + 4, names + 2)");
+	}
+	delete[] names;
+}
+
+void testAssignFill(UnitTest& unit) {
+	string *names = arraySet();
+	ft::vector<string> vect(names, names + 5);
+	{
+		ft::vector<string> vec;
+		vec.assign(3, "Banana");
+
+		unit.assertTrue(vec.size() == 3, "vec.size() == 2");
+		unit.assertTrue(vec.capacity() == 3, "vec.capacity() == 5");
+	}
+	{
+		ft::vector<string> vec(4, "Peras");
+		vec.assign(2, "Abacaxis");
+
+		unit.assertTrue(vec.size() == 2, "vec.size() == 2");
+		unit.assertTrue(vec.capacity() == 4, "vec.capacity() == 4");
+	}
+	{
+		ft::vector<string> vec(4, "Pamanhas");
+		vec.assign(6, "Chocolates");
+
+		unit.assertTrue(vec.size() == 6, "vec.size() == 6");
+		unit.assertTrue(vec.capacity() == 6, "vec.capacity() == 6");
+	}
+	delete[] names;
+}
+
+void testSwap(UnitTest& unit) {
+	string *names = arraySet();
+	ft::vector<string> vec(names, names + 5);
+	ft::vector<string> vec2;
+	{
+		ft::vector<string> vec3;
+		vec3.swap(vec2);
+		unit.assertTrue(vec3.size() == 0, "vec3.size() == 0");
+		unit.assertTrue(vec3.capacity() == 0, "vec3.capacity() == 0");
+	}
+	{
+		vec2.swap(vec);
+		unit.assertTrue(vec.size() == 0, "vec.size() == 0");
+		unit.assertTrue(vec.capacity() == 0, "vec.capacity() == 0");
+		unit.assertTrue(vec2.size() == 5, "vec.size() == 5");
+		unit.assertTrue(vec2.capacity() == 5, "vec.capacity() == 5");
+		unit.assertTrue(ft::equal(names, names + 5, vec2.begin()), "ft::equal(names, names + 5, vec2.begin()");
+	}
+	{
+		vec.assign(names, names + 3);
+		vec.swap(vec2);
+		unit.assertTrue(vec.size() == 5, "vec.size() == 5");
+		unit.assertTrue(vec.capacity() == 5, "vec.capacity() == 5");
+		unit.assertTrue(vec2.size() == 3, "vec.size() == 3");
+		unit.assertTrue(vec2.capacity() == 3, "vec.capacity() == 3");
+		unit.assertTrue(ft::equal(names, names + 3, vec.begin()), "ft::equal(names, names + 3, vec.begin()");
 	}
 	delete[] names;
 }
 
 void vector_modifiers(UnitTest& unit) {
-	testPushBack(unit);
-	testPopBack(unit);
-	testInsertSingleElement(unit);
-	testInsertRange(unit);
-	testInsertFillElements(unit);
-	testErase(unit);
-	testEraseRange(unit);
-	testAssignRange(unit);
+	unit.runTest(testPushBack, "testPushBack");
+	unit.runTest(testPopBack, "testPopBack");
+	unit.runTest(testInsertSingleElement, "testInsertSingleElement");
+	unit.runTest(testInsertRange, "testInsertRange");
+	unit.runTest(testInsertFillElements, "testInsertFillElements");
+	unit.runTest(testErase, "testErase");
+	unit.runTest(testEraseRange, "testEraseRange");
+	unit.runTest(testAssignRange, "testAssignRange");
+	unit.runTest(testAssignFill, "testAssignFill");
+	unit.runTest(testSwap, "testSwap");
 }

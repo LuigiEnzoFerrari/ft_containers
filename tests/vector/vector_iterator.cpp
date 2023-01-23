@@ -117,9 +117,9 @@ static void testCompareOperators(UnitTest& unit) {
 }
 
 void vector_iterator(UnitTest& unit) {
-	testCompareOperators(unit);
-	testCompoundAssignmentOperations(unit);
-	testIncrementedDecremented(unit);
-	testOffSetDereferenceOperator(unit);
-	testConstructors(unit);
+	unit.runTest(testCompareOperators, "testCompareOperators");
+	unit.runTest(testCompoundAssignmentOperations, "testCompoundAssignmentOperations");
+	unit.runTest(testIncrementedDecremented, "testIncrementedDecremented");
+	unit.runTest(testOffSetDereferenceOperator, "testOffSetDereferenceOperator");
+	unit.runTest(testConstructors, "testConstructors");
 }

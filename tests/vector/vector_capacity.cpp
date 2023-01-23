@@ -59,6 +59,6 @@ static void testResize(UnitTest &unit) {
 }
 
 void vector_capacity(UnitTest &unit) {
-	testResize(unit);
-	testReserve(unit);
+	unit.runTest(testResize, "testResize");
+	unit.runTest(testReserve, "testReserve");
 }

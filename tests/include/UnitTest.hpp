@@ -143,6 +143,11 @@ class UnitTest {
 			}
 		}
 
+		void runTest(void (*test)(UnitTest&), std::string name) {
+			std::cout << "\n" << name << "\n" << std::endl;
+			test(*this);
+		}
+
 		void run(void) {
 			Node* current = _suits;
 			while (current != NULL) {
@@ -155,11 +160,12 @@ class UnitTest {
 		}
 
 		void run(Node* suit) {
-			std::cout << suit->name << std::endl;
+			std::cout << suit->name << "\n";
 			suit->data(*this);
 			if (_mode) {
 				std::cout << std::endl;
 			}
+			std::cout << "\n";
 		}
 
 		void clear( void ) {

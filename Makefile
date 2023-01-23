@@ -5,18 +5,20 @@ CFLAGS := -Wall -Wextra -Werror -g -std=c++98 -Wfatal-errors -pedantic-errors -f
 MAIN = main.cpp
 
 
-TESTDIRS := normal_iterator/ func/ vector/
+
+TESTDIRS := normal_iterator/ map/ vector/
 VPATH = tests/ $(addprefix tests/, $(TESTDIRS))
 
-V_ITERATORS := vector_iterator.cpp vector_reverse_iterator.cpp \
+VECTOR := vector_iterator.cpp vector_reverse_iterator.cpp \
 	vector_modifiers.cpp vector_elements_access.cpp \
 	vector_constructors.cpp vector_capacity.cpp \
-	vector_not_member_functions.cpp \
+	vector_non_member_functions.cpp \
 	aux.cpp
 
-VECTOR_SRCS := $(V_ITERATORS)
+MAP := map_capacity.cpp
 
-SRCS :=  $(VECTOR_SRCS)
+
+SRCS :=  $(VECTOR) $(MAP)
 OBJDIR := ./objs/
 
 FT_OBJS := $(addprefix $(OBJDIR)ft_, $(notdir $(SRCS:.cpp=.o)))
