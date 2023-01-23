@@ -78,8 +78,8 @@ static void testOffSetDereferenceOperator(UnitTest& unit) {
 }
 
 static void testCompoundAssignmentOperations(UnitTest& unit) {
-	std::string *names = arraySet();
-	ft::vector<std::string>::iterator it(names);
+	string *names = arraySet();
+	ft::vector<string>::iterator it(names);
 	it += 3;
 	unit.assertTrue(!(*it).compare("Adrian"), "Expected: True; it += 3, *it == Adrian");
 	unit.assertFalse(!(*it).compare("Rafa"), "Expected: Fase; it += 3, *it == Rafa");

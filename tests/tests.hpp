@@ -14,6 +14,7 @@
 /*
 ** TESTS_STL_VECTOR
 */
+typedef std::string string;
 std::string *arraySet( void );
 void vector_iterator(UnitTest& unit);
 void vector_reverse_iterator(UnitTest& unit);
@@ -22,4 +23,5 @@ void vector_elements_access(UnitTest& unit);
 void vector_constructors(UnitTest& unit);
 void vector_capacity(UnitTest& unit);
 void vector_not_member_functions(UnitTest& unit);
+
 #endif

@@ -1,12 +1,15 @@
 #include "tests.hpp"
 void testeEqual(UnitTest& unit) {
-// 	std::string *names = arraySet();
-// 	std::vector<std::string> vec(names, names + 5);
-// 	{
-// 		std::vector<std::string> vec2(names, names + 5);
-// 		unit.assertTrue(ft::equal(vec1, vec2, vec1 + 5));
-// 	}
-	unit.assertTrue(true);
+	string *names = arraySet();
+	{
+		std::vector<string> vec(names, names + 5);
+		unit.assertTrue(ft::equal(vec.begin(), vec.end(), names));
+	}
+	{
+		std::vector<string> vec(names, names + 3);
+		unit.assertTrue(!ft::equal(names, names + 4, vec.begin()));
+	}
+	delete[] names;
 }
 
 void vector_not_member_functions(UnitTest& unit) {

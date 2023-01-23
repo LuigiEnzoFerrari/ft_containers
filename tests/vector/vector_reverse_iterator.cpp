@@ -2,7 +2,7 @@
 #include <map>
 
 struct Lenzo {
-	std::string pera;
+	string pera;
 };
 
 static void testDereference(UnitTest& unit) {
@@ -95,9 +95,9 @@ static void testIteratorIncrementedDecremented(UnitTest& unit) {
 }
 
 static void testCompoundAssignmentOperations(UnitTest& unit) {
-	std::string *names = arraySet();
-	ft::vector<std::string>src(names, names + 5);
-	ft::vector<std::string>::reverse_iterator it(src.end());
+	string *names = arraySet();
+	ft::vector<string>src(names, names + 5);
+	ft::vector<string>::reverse_iterator it(src.end());
 	it += 3;
 	unit.assertTrue(!(*it).compare("Caio"), "Expected: True; it += 3, *it == Caio");
 	unit.assertFalse(!(*it).compare("Rafa"), "Expected: Fase; it += 3, *it == Rafa");

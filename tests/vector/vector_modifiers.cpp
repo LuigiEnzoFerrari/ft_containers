@@ -1,30 +1,30 @@
 #include "tests.hpp"
 
 void testClear(UnitTest& unit) {
-	std::string *names = arraySet();
-	ft::vector<std::string> vec(names, names + 5);
+	string *names = arraySet();
+	ft::vector<string> vec(names, names + 5);
 	vec.clear();
 	unit.assertTrue(vec.size() == 0, "vec.size() == 0");
 	unit.assertTrue(vec.capacity() == 5, "vec.capacity() == 4");
 }
 
 void 	testEraseRange(UnitTest& unit) {
-	std::string *names = arraySet();
+	string *names = arraySet();
 
 	{
-		ft::vector<std::string> vec(names, names + 4);
+		ft::vector<string> vec(names, names + 4);
 		vec.erase(vec.begin(), vec.begin() + 3);
 		unit.assertTrue(vec.size() == 1, "vec.size() == 1");
 		unit.assertTrue(vec.capacity() == 4, "vec.capacity() == 4");
 	}
 	{
-		ft::vector<std::string> vec(names, names + 4);
+		ft::vector<string> vec(names, names + 4);
 		vec.erase(vec.begin() + 2, vec.begin() + 3);
 		unit.assertTrue(vec.size() == 3, "vec.size() == 1");
 		unit.assertTrue(vec.capacity() == 4, "vec.capacity() == 4");
 	}
 	{
-		ft::vector<std::string> vec;
+		ft::vector<string> vec;
 		vec.erase(vec.end(), vec.end());
 		unit.assertTrue(vec.size() == 0, "vec.size() == 0");
 		unit.assertTrue(vec.capacity() == 0, "vec.capacity() == 0");
@@ -33,46 +33,34 @@ void 	testEraseRange(UnitTest& unit) {
 }
 
 void testErase(UnitTest& unit) {
-	std::string *names = arraySet();
+	string *names = arraySet();
 
 	{
-		ft::vector<std::string> vec(names, names + 4);
+		ft::vector<string> vec(names, names + 4);
 		vec.erase(vec.begin());
 		unit.assertTrue(vec.size() == 3, "vec.size() == 3");
 		unit.assertTrue(vec.capacity() == 4, "vec.capacity() == 4");
-		bool equal = true;
-		for (size_t i = 0; i < vec.size(); i++) {
-			if(vec[i] != names[i + 1]) {
-				equal = false;
-			}
-		}
-		unit.assertTrue(equal, "vec[i] == names[i + 1]");
+		unit.assertTrue(ft::equal(names + 1, names + 4, vec.begin()), "vec[i] == names[i + 1]");
 	}
 	{
-		ft::vector<std::string> vec(names, names + 4);
+		ft::vector<string> vec(names, names + 4);
 		vec.erase(vec.end());
 		unit.assertTrue(vec.size() == 3, "vec.size() == 3");
 		unit.assertTrue(vec.capacity() == 4, "vec.capacity() == 4");
-		bool equal = true;
-		for (size_t i = 0; i < vec.size(); i++) {
-			if(vec[i] != names[i]) {
-				equal = false;
-			}
-		}
-		unit.assertTrue(equal, "vec[i] == names[i + 1]");
+		unit.assertTrue(ft::equal(vec.begin(), vec.end(), names), "vec[i] == names[i]");
 	}
 	delete[] names;
 }
 
 void testInsertSingleElement(UnitTest& unit) 	{
-	std::string *names = arraySet();
-	ft::vector<std::string> vec(names, names + 5);
+	string *names = arraySet();
+	ft::vector<string> vec(names, names + 5);
 	vec.insert(vec.begin() + 2, names[0]);
 
 	unit.assertTrue(vec[2] == "Luigi", "vec[2] == Luigi");
 	unit.assertTrue(vec.capacity() == 10, "vec.capacity() == 10");
 
-	ft::vector<std::string> vec2;
+	ft::vector<string> vec2;
 
 	vec2.insert(vec2.begin(), names[0]);
 
@@ -89,30 +77,30 @@ void testInsertSingleElement(UnitTest& unit) 	{
 }
 
 void testInsertFillElements(UnitTest &unit) {
-	std::string *names = arraySet();
+	string *names = arraySet();
 	{
-		ft::vector<std::string> vec;
+		ft::vector<string> vec;
 		vec.insert(vec.begin(), 1, names[2]);
 		unit.assertTrue(vec[0] == names[2], "vec[x] == name[x]");
 		unit.assertTrue(vec.size() == 1, "size == 1");
 		unit.assertTrue(vec.capacity() == 1, "capacity == 1");
 	}
 	{
-		ft::vector<std::string> vec;
+		ft::vector<string> vec;
 		vec.insert(vec.begin(), 3, names[3]);
 		unit.assertTrue(vec[0] == names[3] && vec[1] == names[3] && vec[2] == names[3], "vec[x] == name[x]");
 		unit.assertTrue(vec.size() == 3, "size == 3");
 		unit.assertTrue(vec.capacity() == 3, "capacity == 3");
 	}
 	{
-		ft::vector<std::string> vec(names, names + 5);
+		ft::vector<string> vec(names, names + 5);
 		vec.insert(vec.begin() + 2, 2, names[4]);
 		unit.assertTrue(vec[2] == names[4] && vec[3] == names[4], "vec[x] == name[x]");
 		unit.assertTrue(vec.size() == 7, "size == 7");
 		unit.assertTrue(vec.capacity() == 10, "capacity == 10");
 	}
 	{
-		ft::vector<std::string> vec(names, names + 4);
+		ft::vector<string> vec(names, names + 4);
 		vec.insert(vec.end(), 2, names[1]);
 		unit.assertTrue(*(vec.end() - 1) == names[1] && *(vec.end() - 2) == names[1], "vec[x] == name[x]");
 		unit.assertTrue(vec.size() == 6, "size == 6");
@@ -122,17 +110,17 @@ void testInsertFillElements(UnitTest &unit) {
 }
 
 void testInsertRange(UnitTest& unit) {
-	std::string *names = arraySet();
+	string *names = arraySet();
 	{
-		ft::vector<std::string> vec;
+		ft::vector<string> vec;
 
 		vec.insert(vec.begin(),vec.begin(), vec.begin());
 		unit.assertTrue(vec.empty(), "vec.empty()");
 		unit.assertTrue(vec.capacity() == 0, "vec.capacity() == 0");
 	}
 	{
-		ft::vector<std::string> vec;
-		ft::vector<std::string> vec2(names, names + 3);
+		ft::vector<string> vec;
+		ft::vector<string> vec2(names, names + 3);
 		vec.insert(vec.end(), vec2.begin(), vec2.end());
 
 		unit.assertTrue(vec[0] == names[0] && vec[1] == names[1] && vec[2] == names[2], "~vec[x] == name[x]");
@@ -140,8 +128,8 @@ void testInsertRange(UnitTest& unit) {
 		unit.assertTrue(vec.capacity() == 3, "vec.capacity()== 3");
 	}
 	{
-		ft::vector<std::string> vec(names, names + 3);
-		ft::vector<std::string> vec2(names + 3, names + 5);
+		ft::vector<string> vec(names, names + 3);
+		ft::vector<string> vec2(names + 3, names + 5);
 
 		vec.insert(vec.begin() + 2, vec2.begin(), vec2.end());
 
@@ -153,30 +141,27 @@ void testInsertRange(UnitTest& unit) {
 }
 
 void testPopBack(UnitTest& unit) {
-	std::string *names = arraySet();
-	ft::vector<std::string> vec(names, names + 1);
-	vec.pop_back();
-	unit.assertTrue(vec.size() == 0, "size == 0");
-	unit.assertTrue(vec.capacity() == 1, "capacity == 1");
-
-	ft::vector<std::string> vec2(names, names + 5);
-	bool equal = false;
-	vec2.pop_back();
-	for (size_t i = 0; i < vec2.size(); i++) {
-		
-		if (vec2[i].compare(names[i]) != 0) {
-			equal = false;
-		}
+	string *names = arraySet();
+	{
+		ft::vector<string> vec(names, names + 1);
+		vec.pop_back();
+		unit.assertTrue(vec.size() == 0, "size == 0");
+		unit.assertTrue(vec.capacity() == 1, "capacity == 1");
+		unit.assertTrue(ft::equal(vec.begin(), vec.end(), names), "vec[i] == vec2[i]");
 	}
-	unit.assertTrue(vec2.size() == 4, "size == 4");
-	unit.assertTrue(vec2.size() == 4, "vec[i] == names[i]");
-
+	{
+		ft::vector<string> vec(names, names + 5);
+		vec.pop_back();
+		unit.assertTrue(ft::equal(vec.begin(), vec.end(), names), "vec[i] == vec[i]");
+		unit.assertTrue(vec.size() == 4, "size == 4");
+		unit.assertTrue(vec.size() == 4, "vec[i] == names[i]");
+	}
 	delete[] names;
 }
 
 void testPushBack(UnitTest& unit) {
-	std::string *names = arraySet();
-	ft::vector<std::string> vec;
+	string *names = arraySet();
+	ft::vector<string> vec;
 
 	for (size_t i = 0; i < 3; i++) {
 		vec.push_back(names[i]);
@@ -195,58 +180,38 @@ void testPushBack(UnitTest& unit) {
 }
 
 void testAssignRange(UnitTest& unit) {
-	std::string *names = arraySet();
-	ft::vector<std::string> vect(names, names + 5);
+	string *names = arraySet();
+	ft::vector<string> vect(names, names + 5);
 	{
-		ft::vector<std::string> vec;
+		ft::vector<string> vec;
 		vec.assign(vect.begin(), vect.begin());
 		
 		unit.assertTrue(vec.size() == 0, "Assign 0");
 		unit.assertTrue(vec.capacity() == 0, "Assign 0");
 	}
 	{
-		ft::vector<std::string> vec;
+		ft::vector<string> vec;
 		vec.assign(vect.begin(), vect.end());
 		
 		unit.assertTrue(vec.size() == 5, "Assign 5");
 		unit.assertTrue(vec.capacity() == 5, "Assign 5");
-		bool equal = true;
-		for(size_t i = 0; i < vec.size(); i++) {
-			if(vec[i] != vect[i]) {
-				equal = false;
-			}
-		}
-		unit.assertTrue(equal, "wwwwww");
+		unit.assertTrue(ft::equal(vec.begin(), vec.end(), names), "wwwwww");
 	}
 	{
-		ft::vector<std::string> vec(names, names + 5);
+		ft::vector<string> vec(names, names + 5);
 		vec.assign(vect.begin(), vect.begin() + 3);
 		
 		unit.assertTrue(vec.size() == 3, "Assign 3");
 		unit.assertTrue(vec.capacity() == 5, "Assign 5");
-		bool equal = true;
-		for(size_t i = 0; i < vec.size(); i++) {
-			std::cout << vec[i] << std::endl;
-			if(vec[i] != vect[i]) {
-				equal = false;
-			}
-		}
-		unit.assertTrue(equal, "osdijf");
+		unit.assertTrue(ft::equal(vec.begin(), vec.end(), names), "osdijf");
 	}
 	{
-		ft::vector<std::string> vec(names, names + 5);
+		ft::vector<string> vec(names, names + 5);
 		vec.assign(vec.begin() + 2, vec.begin() + 4);
 		
 		unit.assertTrue(vec.size() == 2, "Assign 2");
 		unit.assertTrue(vec.capacity() == 5, "Assign 5");
-		bool equal = true;
-		for(size_t i = 0; i < vec.size(); i++) {
-			std::cout << vec[i] << std::endl;
-			if(vec[i] != vect[i + 2]) {
-				equal = false;
-			}
-		}
-		unit.assertTrue(equal, "osdijf");
+		unit.assertTrue(ft::equal(vec.begin() + 2 , vec.begin() + 4, names + 2));
 	}
 	delete[] names;
 }
