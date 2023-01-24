@@ -16,8 +16,13 @@
 ** TESTS_STL_VECTOR
 */
 typedef std::string string;
+typedef std::map<string, int>::iterator map_iterator;
 std::string *arraySet( void );
 std::string *test( void );
+string *setCars( void );
+
+void print_values( std::map<std::string, int> mymap );
+std::map<string, int> getCars( void );
 class Sets {
 	std::string *names;
 
@@ -39,5 +44,7 @@ void vector_capacity(UnitTest& unit);
 void vector_non_member_functions(UnitTest& unit);
 
 void map_capacity(UnitTest& unit);
+void map_constructors(UnitTest& unit);
+
 
 #endif

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <cstring>
-
+#include <iterator>
 #define RESET_COLOR "\033[0m" 
 
 /*
