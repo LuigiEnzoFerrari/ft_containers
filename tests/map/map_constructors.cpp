@@ -1,40 +1,35 @@
 #include "tests.hpp"
 
 void testConstructor(UnitTest& unit) {
-	std::map<string, int> cars = getCars();
-	string *car_names = setCars();
+	std::pair<string, int> *arr = getCars();
 	{
-		std::map<string, int> cars2;
-		unit.assertTrue(cars2.size() == 0, "size 0");
-		unit.assertTrue(cars2.empty(), "empty");
+		std::map<string, int> cars;
+		unit.assertTrue(cars.size() == 0, "size 0");
+		unit.assertTrue(cars.empty(), "empty");
 	}
 	{
-		std::map<string, int> cars2(cars.begin(), cars.end());
-		bool equal = true;
-		for (size_t i = 0; i < 5; i++) {
-			if (cars[car_names[i]] != cars2[car_names[i]]) {
-				equal = false;
-			}
-		}
-		unit.assertTrue(equal);
-		unit.assertTrue(cars2.size() == 5, "size 5");
-		unit.assertFalse(cars2.empty(), "!empty");
-	}
-	{
+		std::map<string, int> cars(arr, arr + 6);
+		unit.assertTrue(compareMapAndPair(cars, arr, 6), "equal");
+		unit.assertTrue(cars.size() == 6, "size 6");
+		unit.assertFalse(cars.empty(), "!empty");
+
 		std::map<string, int> cars2(cars);
-		bool equal = true;
-		for (size_t i = 0; i < 5; i++) {
-			if (cars[car_names[i]] != cars2[car_names[i]]) {
-				equal = false;
-			}
-		}
-		unit.assertTrue(equal);
-		unit.assertTrue(cars2.size() == 5, "size 5");
-		unit.assertFalse(cars2.empty(), "!empty");
+		unit.assertTrue(compareMapAndPair(cars2, arr, 6), "equal");
+		unit.assertTrue(cars2.size() == 6, "size 6");
 	}
-	delete[] car_names;
+}
+
+void testAssignOperator(UnitTest& unit) {
+	std::pair<string, int> *arr = getCars();
+	std::map<string, int> cars(arr, arr + 5);
+	std::map<string, int> cars2;
+	cars2 = cars;
+
+	unit.assertTrue(compareMapAndPair(cars2, arr, 5), "equal");
+	unit.assertTrue(cars2.size() == 5, "size 6");
 }
 
 void map_constructors(UnitTest& unit) {
 	unit.runTest(testConstructor, "testConstructor");
+	unit.runTest(testAssignOperator, "testAssignOperator");
 }

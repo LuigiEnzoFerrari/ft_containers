@@ -15,7 +15,7 @@ VECTOR := vector_iterator.cpp vector_reverse_iterator.cpp \
 	vector_non_member_functions.cpp \
 	aux.cpp
 
-MAP := map_capacity.cpp map_constructors.cpp
+MAP := map_capacity.cpp map_constructors.cpp map_iterators.cpp \
 
 
 SRCS :=  $(VECTOR) $(MAP)

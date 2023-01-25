@@ -3,15 +3,19 @@
 #include <utility>
 
 
-void testCapacity(UnitTest& unit) {
-	std::map<std::string, int> map;
-	map["one"] = 1;
-	map["two"] = 2;
-	map["three"] = 3;
-	// std::pair
-	unit.assertTrue(map["two"] == 2, "map two");
+static void testEmpty(UnitTest& unit) {
+	std::map<string, int> map;
+
+	unit.assertTrue(map.empty(), "empty()");
+	unit.assertTrue(map.size() == 0, "size()");
+	map["pera"] = 4;
+	map["banana"] = 2;
+	map["cacau"] = 3;
+	unit.assertFalse(map.empty(), "!empty()");
+	unit.assertTrue(map.size() == 3, "!empty()");
+	unit.assertTrue(map.max_size() == 1, "max_size()");
 }
 
 void map_capacity(UnitTest& unit) {
-	testCapacity(unit);
+	unit.runTest(testEmpty, "testEmpty");
 }

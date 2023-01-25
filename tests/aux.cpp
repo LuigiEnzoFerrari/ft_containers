@@ -19,22 +19,28 @@ string *setCars( void ) {
 	return (names);
 }
 
-std::map<string, int> getCars( void ) {
-	std::string *names = setCars();
-	std::map<string, int> cars;
-	
-	for (size_t i = 0; i < 5; i++) {
-		cars[names[i]] = i * 3;
-
+bool compareMapAndPair(std::map<string, int> map, std::pair<string, int> *arr, size_t n) {
+	for (size_t i = 0; i < n; i++) {
+		if (!map.count(arr[i].first)) {
+			return (false);
+		}
+		if (map[arr[i].first] != arr[i].second) {
+			return (false);
+		}
 	}
-	delete[] names;
-	// cars["Mitsubishi Lancer"] = 10;
-	// cars["Peugeot 207"] = 9;
-	// cars["Ferrari 458"] = 8;
-	// cars["Kawasaki ZZR 250"] = 7;
-	// cars["Porsche 911"] = 6;
-	// cars["Subaru WRX"] = 5;
-	return (cars);
+	return (true);
+}
+
+std::pair<string, int> *getCars( void ) {
+	static std::pair<string, int> *arr = new std::pair<string, int>[6];
+
+	arr[0] = std::make_pair("Mitsubishi Lancer", 5);
+	arr[1] = std::make_pair("Peugeot 207", 3);
+	arr[2] = std::make_pair("Ferrari 458", 7);
+	arr[3] = std::make_pair("Kawasaki ZZR 250", 4);
+	arr[4] = std::make_pair("Porsche 911", 8);
+	arr[5] = std::make_pair("Subaru WRX", 6);
+	return (arr);
 }
 
 void print_values( std::map<std::string, int> mymap ) {
