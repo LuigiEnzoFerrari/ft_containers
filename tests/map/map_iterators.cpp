@@ -5,7 +5,7 @@ void testIterators(UnitTest& unit) {
 	{
 		std::map<string, int> cars(arr, arr + 3);
 		bool equal = false;
-		for (map_iterator it=cars.begin(); it != cars.end(); it++) {
+		for (map_iterator it = cars.begin(); it != cars.end(); it++) {
 			equal = true;
 		}
 		unit.assertTrue(equal, "begin()~end()");

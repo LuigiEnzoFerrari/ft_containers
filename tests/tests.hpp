@@ -51,5 +51,6 @@ void vector_non_member_functions(UnitTest& unit);
 void map_constructors(UnitTest& unit);
 void map_iterators(UnitTest& unit);
 void map_capacity(UnitTest& unit);
+void map_element_acess(UnitTest& unit);
 
 #endif

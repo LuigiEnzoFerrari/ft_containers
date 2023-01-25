@@ -5,13 +5,11 @@ void testConstructor(UnitTest& unit) {
 	{
 		std::map<string, int> cars;
 		unit.assertTrue(cars.size() == 0, "size 0");
-		unit.assertTrue(cars.empty(), "empty");
 	}
 	{
 		std::map<string, int> cars(arr, arr + 6);
 		unit.assertTrue(compareMapAndPair(cars, arr, 6), "equal");
 		unit.assertTrue(cars.size() == 6, "size 6");
-		unit.assertFalse(cars.empty(), "!empty");
 
 		std::map<string, int> cars2(cars);
 		unit.assertTrue(compareMapAndPair(cars2, arr, 6), "equal");

@@ -16,7 +16,7 @@ VECTOR := vector_iterator.cpp vector_reverse_iterator.cpp \
 	aux.cpp
 
 MAP := map_capacity.cpp map_constructors.cpp map_iterators.cpp \
-
+	map_element_acess.cpp
 
 SRCS :=  $(VECTOR) $(MAP)
 OBJDIR := ./objs/

@@ -13,7 +13,10 @@ static void testEmpty(UnitTest& unit) {
 	map["cacau"] = 3;
 	unit.assertFalse(map.empty(), "!empty()");
 	unit.assertTrue(map.size() == 3, "!empty()");
-	unit.assertTrue(map.max_size() == 1, "max_size()");
+
+	std::allocator<std::pair<string, int> > alloc;
+
+	unit.assertTrue(map.max_size() == alloc.max_size(), "max_size()");
 }
 
 void map_capacity(UnitTest& unit) {
