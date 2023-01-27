@@ -10,12 +10,11 @@ static void testOffSetOperator(UnitTest& unit) {
 
 	map["Gariadno"];
 	unit.assertTrue(map.size() == 3, "size == 3, The size always increases by 1 if does not found a key");
-	map["Gariadno"] = "Shot Hair Hunter";
-	unit.assertTrue(map["Gariadno"] == "Shot Hair Hunter", "Gariadno == Shot Hair Hunter");
+	map["Gariadno"] = "Short Hair Hunter";
+	unit.assertTrue(map["Gariadno"] == "Short Hair Hunter", "Gariadno == Short Hair Hunter");
 	unit.assertTrue(map.size() == 3, "size == 3, The old value is replaced when found the key, and the size will be the same");
-
 }
 
-void map_element_acess(UnitTest& unit) {
-	unit.runTest(testOffSetOperator, "map_element_acess");
+void map_element_access(UnitTest& unit) {
+	unit.runTest(testOffSetOperator, "testOffSetOperator");
 }

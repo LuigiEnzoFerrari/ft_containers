@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-void testReserve(UnitTest &unit) {
+static void testReserve(UnitTest &unit) {
 	string *names = arraySet();
 	{
 		ft::vector<string> vec;
@@ -58,7 +58,7 @@ static void testResize(UnitTest &unit) {
 	delete[] names;
 }
 
-void testMaxSize(UnitTest &unit) {
+static void testMaxSize(UnitTest &unit) {
 	ft::vector<string> vec;
 	std::allocator<string> alloc;
 	std::cout << vec.max_size() << "  " << alloc.max_size() << std::endl;

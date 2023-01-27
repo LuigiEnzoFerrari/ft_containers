@@ -1,4 +1,5 @@
 #include "tests.hpp"
+
 string *arraySet( void ) {
 	string *names = new string[5];
 	names[0] = "Luigi";
@@ -9,27 +10,18 @@ string *arraySet( void ) {
 	return (names);
 }
 
-string *setCars( void ) {
-	string *names = new string[5];
-	names[0] = "Mitsubishi";
-	names[1] = "Peugeot";
-	names[2] = "Ferrari";
-	names[3] = "Kawasaki";
-	names[4] = "Porsche";
-	return (names);
-}
 
-bool compareMapAndPair(std::map<string, int> map, std::pair<string, int> *arr, size_t n) {
-	for (size_t i = 0; i < n; i++) {
-		if (!map.count(arr[i].first)) {
-			return (false);
-		}
-		if (map[arr[i].first] != arr[i].second) {
-			return (false);
-		}
-	}
-	return (true);
-}
+// bool compareMapAndPair(ft::map<string, int> map, std::pair<string, int> *arr, size_t n) {
+// 	for (size_t i = 0; i < n; i++) {
+// 		if (!map.count(arr[i].first)) {
+// 			return (false);
+// 		}
+// 		if (map[arr[i].first] != arr[i].second) {
+// 			return (false);
+// 		}
+// 	}
+// 	return (true);
+// }
 
 std::pair<string, int> *getCars( void ) {
 	static std::pair<string, int> *arr = new std::pair<string, int>[6];
@@ -43,12 +35,12 @@ std::pair<string, int> *getCars( void ) {
 	return (arr);
 }
 
-void print_values( std::map<std::string, int> mymap ) {
-	for (std::map<string, int>::iterator it = mymap.begin(); it != mymap.end(); it++)
-	{
-		std::cout << it->first    // string (key)
-				<< ':'
-				<< it->second   // string's value 
-				<< std::endl;
-	}
-}
+// void print_values( std::map<std::string, int> mymap ) {
+// 	for (std::map<string, int>::iterator it = mymap.begin(); it != mymap.end(); it++)
+// 	{
+// 		std::cout << it->first    // string (key)
+// 				<< ':'
+// 				<< it->second   // string's value 
+// 				<< std::endl;
+// 	}
+// }
