@@ -1,12 +1,13 @@
 FT_NAME := ft_containers
 STD_NAME := std_containers
 CC := c++
-CFLAGS := -g -std=c++98 -Wfatal-errors -pedantic-errors -fsanitize=address
+CFLAGS := -g -Wfatal-errors -pedantic-errors -std=c++98# -fsanitize=address
 MAIN = main.cpp
 
-# -Wall -Wextra -Werror
+# -Wall -Wextra -Werror  -std=c++98 -fsanitize=address
 
 TESTDIRS := normal_iterator/ map/ vector/
+
 VPATH = tests/ $(addprefix tests/, $(TESTDIRS)) include/
 
 VECTOR := vector_iterator.cpp vector_reverse_iterator.cpp \

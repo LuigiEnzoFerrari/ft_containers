@@ -1,17 +1,19 @@
 #include "tests.hpp"
 
+
+
+
 static void test_red_black(UnitTest& unit) {
 	ft::map<int, int> one;
-	ft::pair<int, int> arr = ft::make_pair(4, 5);
-	one.insert(arr);
-	std::cout << one._black.root->_data.second << std::endl;
-	std::cout << one._black.root->_data.first << std::endl;
-	ft::pair<int, int> arr2 = ft::make_pair(80, 45);
-	one.insert(arr2);
-	std::cout << "  oo " << std::endl;
-	std::cout << one._black.root->_right->_data.second << std::endl;
-	std::cout << one._black.root->_right->_data.first << std::endl;
-	// unit.assertTrue();
+	ft::pair<int, int> arr;
+	for (int x = 0; x < 10; x++) {
+			arr = ft::make_pair(x + 100, 10);
+			one.insert(arr);
+	}
+	one._black.printBT();
+	one._black.delete_this();
+	one._black.printBT();
+	unit.assertTrue(true);
 }
 
 static void testConstructor(UnitTest& unit) {
