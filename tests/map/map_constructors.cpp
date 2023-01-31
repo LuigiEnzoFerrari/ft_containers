@@ -1,18 +1,24 @@
 #include "tests.hpp"
 
-
-
-
 static void test_red_black(UnitTest& unit) {
 	ft::map<int, int> one;
 	ft::pair<int, int> arr;
-	for (int x = 0; x < 10; x++) {
+	for (int x = 0; x < 12; x++) {
 			arr = ft::make_pair(x + 100, 10);
 			one.insert(arr);
 	}
-	one._black.printBT();
-	one._black.delete_this();
-	one._black.printBT();
+	ft::map<int, int>::iterator it;
+
+	it = one.begin();
+	it++;
+	std::cout << it->first << std::endl;	
+	std::cout << it->second << std::endl;	
+	it->second = 44;
+	std::cout << it->first << std::endl;	
+	std::cout << it->second << std::endl;
+	it = one.find(104);
+	std::cout << it->first << std::endl;	
+	std::cout << it->second << std::endl;	
 	unit.assertTrue(true);
 }
 

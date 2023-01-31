@@ -5,6 +5,7 @@
 #include <iostream>
 #include <alloca.h>
 #include "stl_utility.hpp"
+#include "stl_iterator.hpp"
 #define BLACK 'b'
 #define RED 'r'
 
@@ -13,267 +14,379 @@
 
 
 namespace ft {
-
-
 	template <typename Key, typename value_type>
-	struct Rb_node {
-		public:
+	struct Rb_tree_node {
+			typedef Rb_tree_node	Rb_node;
 			Key				_key;
 			value_type		_data;
-			Rb_node*		_parent;
-			Rb_node*		_left;
-			Rb_node*		_right;
-			char			_color;
+			Rb_node*		parent;
+			Rb_node*		left;
+			Rb_node*		right;
+			char			color;
 	
-			Rb_node( void ):
-				_parent(this), _left(this), _right(this), _color(BLACK) {};
-			Rb_node( const value_type& data, Rb_node* parent, Rb_node* left, Rb_node* right, char color = RED ): _data(data), _parent(parent), _left(left), _right(right), _color(color) {};
-			
+			Rb_tree_node( void ): parent(this), left(this), right(this), color(BLACK) {};
+			Rb_tree_node(
+				const value_type& data,
+				Rb_node* parent,
+				Rb_node* left,
+				Rb_node* right,
+				char color = RED ): _data(data), parent(parent), left(left), right(right), color(color) {};
+
+			Rb_tree_node *minimum(Rb_tree_node *x, Rb_tree_node *Nil) {
+				while (x->left != Nil) {
+					x = x->left;
+				}
+				return (x);
+			}
+
+			Rb_tree_node *maxinum(Rb_tree_node *x, Rb_tree_node *Nil) {
+				while (x->right != Nil) {
+					x = x->right;
+				}
+				return (x);
+			}
+
+			Rb_node* nextNode(Rb_node* x, Rb_node* Nil) {
+				if (x->right != Nil)
+				return minimum(x->right, Nil);
+				Rb_node *y = x->parent;
+				while (y != y->right && x == y->right) {
+					x = y;
+					y = y->parent;
+				}
+				return y;
+			}
 	};
 
-	// template<typename Key, typename value_type, typename _KeyOfValue, typename _Compare, typename _Alloc = allocator<_Val> >
+	template <typename Key, typename T>
+	class tree_iterator: public ft::iterator<ft::bidirectional_iterator_tag, T> {
+		private:
+			Rb_tree_node<Key, T>* p;
+			Rb_tree_node<Key, T>* Nil;
+			Rb_tree_node<Key, T> *tmp;
+		public:
+
+			tree_iterator( void ): p(NULL) {}
+			explicit tree_iterator(Rb_tree_node<Key, T>* x, Rb_tree_node<Key, T>* y): p(x), Nil(y) {}
+			// tree_iterator(const tree_iterator& src): p(src.p) {}
+			T& operator*() const { return p->_data; }
+
+			T* operator->() const { return &(operator*()); }
+
+			tree_iterator& operator++() {
+				p = p->nextNode(p, Nil);
+				return (*this);
+			}
+
+			tree_iterator operator++(int) {
+				tmp = p;
+				p = p->nextNode(p, Nil);
+				return (tree_iterator(tmp, Nil));
+			}
+
+			~tree_iterator( void ) {}
+	};
+
 	template <typename Key, typename value_type, typename Compare = std::less<Key>, typename Alloc = std::allocator<value_type> >
 	class Rb_tree {
 	public:
-		typedef Rb_node<Key, value_type>                Rb_node_type;
-		typedef Alloc                                   allocator_type;
-		typedef typename std::allocator<Rb_node_type>   _node_allocator_type;
+		typedef Alloc	allocator_type;
+		typedef typename allocator_type::size_type			size_type;
 
-		Rb_node_type* root;
-		Rb_node_type* Nil;
-	private:
-		_node_allocator_type _node_allocator;
+		typedef Rb_tree_node<Key, value_type>				Rb_node;
+		typedef typename std::allocator<Rb_node>			_node_allocator_type;
+		typedef ft::tree_iterator<Key, value_type>			iterator;
+
+		Rb_node*	root;
+		Rb_node*	Nil;
+		size_type	_size;
 
 	public:
-
 		Rb_tree( void ): root(NULL) {
-			Nil = new Rb_node_type;
+			Nil = new Rb_node;
 			root = Nil;
+			_size = 0;
 		}
 
-		void insert(value_type data) {
-			Rb_node_type *y = Nil;
-			Rb_node_type *x = root;
+		iterator find( const Key& k ) {
+			Rb_node* tmp = root;
+			while (tmp != Nil) {
+				if (Compare()(k, tmp->_data.first)) {
+					tmp = tmp->left;
+				
+				} else if (Compare()(tmp->_data.first, k)) {
+					tmp = tmp->right;
+				} else {
+					break;
+				}
+			}
+			return iterator(tmp, Nil);
+		}
 
-			Rb_node_type *z = _node_allocator.allocate(1);
-			_node_allocator.construct(z, Rb_node_type(data, Nil, Nil, Nil));
+		iterator begin( void ) {
+			return (iterator(root->minimum(root, Nil), Nil));
+		};
+
+		iterator end( void ) {
+			return (iterator(Nil, Nil));
+		}
+
+		size_type size( void ) {
+			return (_size);
+		}
+		void insert(value_type data) {
+			Rb_node *y = Nil;
+			Rb_node *x = root;
+
+			Rb_node *z = _node_allocator.allocate(1);
+			_node_allocator.construct(z, Rb_node(data, Nil, Nil, Nil));
 			while (x != Nil) {
 				y = x;
 				if (Compare()(z->_data.first, x->_data.first)) {
-					x = x->_left;
-				} else { x = x->_right; };
+					x = x->left;
+				} else { x = x->right; };
 			}
-			z->_parent = y;
+			z->parent = y;
 			if (y == Nil) {
 				root = z;
 			} else if(Compare()(z->_data.first, y->_data.first)) {
-				y->_left = z;
+				y->left = z;
 			} else {
-				y->_right = z;
+				y->right = z;
 			}
 			insertFixup(z);
+			_size++;
 		}
 
-		void leftRotate(Rb_node_type *node) {
-			Rb_node_type *tmp = node->_right;
-			node->_right = tmp->_left;
-			if (tmp->_left != Nil)
-				tmp->_left->_parent = node;
-			tmp->_parent = node->_parent;
-			if (node->_parent == Nil)
+		void leftRotate(Rb_node *node) {
+			Rb_node *tmp = node->right;
+			node->right = tmp->left;
+			if (tmp->left != Nil)
+				tmp->left->parent = node;
+			tmp->parent = node->parent;
+			if (node->parent == Nil)
 				root = tmp;
-			else if (node == node->_parent->_left)
-				node->_parent->_left = tmp;
+			else if (node == node->parent->left)
+				node->parent->left = tmp;
 			else
-				node->_parent->_right = tmp;
-			tmp->_left = node;
-				node->_parent = tmp;
+				node->parent->right = tmp;
+			tmp->left = node;
+				node->parent = tmp;
 		}
 
-		void rightRotate(Rb_node_type *node) {
-			Rb_node_type *tmp = node->_left;
-			node->_left = tmp->_right;
-			if (tmp->_right != Nil)
-				tmp->_right->_parent = node;
-			tmp->_parent = node->_parent;
-			if (node->_parent == Nil)
+		void rightRotate(Rb_node *node) {
+			Rb_node *tmp = node->left;
+			node->left = tmp->right;
+			if (tmp->right != Nil)
+				tmp->right->parent = node;
+			tmp->parent = node->parent;
+			if (node->parent == Nil)
 				root = tmp;
-			else if (node == node->_parent->_right)
-				node->_parent->_right = tmp;
+			else if (node == node->parent->right)
+				node->parent->right = tmp;
 			else
-				node->_parent->_left = tmp;
-			tmp->_right = node;
-			node->_parent = tmp;
+				node->parent->left = tmp;
+			tmp->right = node;
+			node->parent = tmp;
 		}
 
-		void insertFixup(Rb_node_type *node) {
-			while (node->_parent->_color == RED) {
-				if (node->_parent == node->_parent->_parent->_left) {
-					Rb_node_type *tmp = node->_parent->_parent->_right;
-					if (tmp->_color == RED) {
-						node->_parent->_color = BLACK;
-						tmp->_color = BLACK;
-						node->_parent->_parent->_color = RED;
-						node = node->_parent->_parent;
+		void insertFixup(Rb_node *node) {
+			while (node->parent->color == RED) {
+				if (node->parent == node->parent->parent->left) {
+					Rb_node *tmp = node->parent->parent->right;
+					if (tmp->color == RED) {
+						node->parent->color = BLACK;
+						tmp->color = BLACK;
+						node->parent->parent->color = RED;
+						node = node->parent->parent;
 					} else {
-						if (node == node->_parent->_right) {
-							node = node->_parent;
+						if (node == node->parent->right) {
+							node = node->parent;
 							leftRotate(node);
 						}
-						node->_parent->_color = BLACK;
-						node->_parent->_parent->_color = RED;
-						rightRotate(node->_parent->_parent);
+						node->parent->color = BLACK;
+						node->parent->parent->color = RED;
+						rightRotate(node->parent->parent);
 					}
 				} else {
-					Rb_node_type *tmp = node->_parent->_parent->_left;
-					if (tmp->_color == RED) {
-						node->_parent->_color = BLACK;
-						tmp->_color = BLACK;
-						node->_parent->_parent->_color = RED;
-						node = node->_parent->_parent;
+					Rb_node *tmp = node->parent->parent->left;
+					if (tmp->color == RED) {
+						node->parent->color = BLACK;
+						tmp->color = BLACK;
+						node->parent->parent->color = RED;
+						node = node->parent->parent;
 					} else {
-						if (node == node->_parent->_left) {
-							node = node->_parent;
+						if (node == node->parent->left) {
+							node = node->parent;
 							rightRotate(node);
 						}
-						node->_parent->_color = BLACK;
-						node->_parent->_parent->_color = RED;
-						leftRotate(node->_parent->_parent);
+						node->parent->color = BLACK;
+						node->parent->parent->color = RED;
+						leftRotate(node->parent->parent);
 					}
 				}
 			}
-			root->_color = BLACK;
+			root->color = BLACK;
 		}
 
-		Rb_node_type *treeMinimum(Rb_node_type *x) {
-			while (x->_left != Nil) {
-				x = x->_left;
-			}
-			return (x);
-		}
+		// Rb_node *minimum(Rb_node *x) {
+		// 	while (x->left != Nil) {
+		// 		x = x->left;
+		// 	}
+		// 	return (x);
+		// }
 
-		void nodeDelete(Rb_node_type *node) {
-			Rb_node_type *y = node;
-			Rb_node_type *x;
-			char color = node->_color;
-			if (node->_left == Nil) {
-				x = node->_right;
-				transplant(node, node->_right);
-			} else if (node->_right == Nil) {
-				x = node->_left;
-				transplant(node, node->_left);
-			} else  {
-				y = treeMinimum(node->_right);
-				color = y->_color;
-				x = y->_right;
-				if (y->_parent == node) {
-					x->_parent = y;
-				} else  {
-					transplant(y, y->_right);
-					y->_right = node->_right;
-					y->_right->_parent = node;
+		void nodeDelete(Rb_node *node) {
+			Rb_node *y = node;
+			Rb_node *x;
+			char y_originalcolor = y->color;
+			if (node->left == Nil) {
+				x = node->right;
+				transplant(node, node->right);
+			} else if (node->right == Nil) {
+				x = node->left;
+				transplant(node, node->left);
+			} else {
+				y = root->minimum(node->right, Nil);
+				y_originalcolor = y->color;
+				x = y->right;
+				if (y->parent == node) {
+					x->parent = y;
+				} else {
+					transplant(y, y->right);
+					y->right = node->right;
+					y->right->parent = y;
 				}
 				transplant(node, y);
-				y->_left = node->_left;
-				y->_left->_parent = y;
-				y->_color = node->_color;
+				y->left = node->left;
+				y->left->parent = y;
+				y->color = node->color;
 			}
-			if (color == BLACK) {
+			if (y_originalcolor == BLACK) {
 				deleteFixUp(x);
 			}
+			_size--;
 		}
 
-		void transplant(Rb_node_type *u, Rb_node_type *v) {
-			if (u->_parent == Nil) {
+		void transplant(Rb_node *u, Rb_node *v) {
+			if (u->parent == Nil) {
 				root = v;
-			} else if (u == u->_parent->_left) {
-				u->_parent->_left = v;
+			} else if (u == u->parent->left) {
+				u->parent->left = v;
 			} else {
-				u->_parent->_right = v;
-				v->_parent = u->_parent;
+				u->parent->right = v;
 			}
+			v->parent = u->parent;
 		}
-		void delete_this( void ) {
-			nodeDelete(root->_right->_right);
-		}
-		void deleteFixUp(Rb_node_type *x) {
-			Rb_node_type *w;
-			while (x != root && x->_color == BLACK) {
-				if (x == x->_parent->_left) {
-					w = x->_parent->_right;
-					if (w->_color == RED) {
-						w->_color = BLACK;
-						x->_parent->_color = RED;
-						leftRotate(x->_parent);
-						w = x->_parent->_right;
+
+		void deleteFixUp(Rb_node *x) {
+			Rb_node *w;
+			while (x != root && x->color == BLACK) {
+				if (x == x->parent->left) {
+					w = x->parent->right;
+					if (w->color == RED) {
+						w->color = BLACK;
+						x->parent->color = RED;
+						leftRotate(x->parent);
+						w = x->parent->right;
 					}
-					if (w->_left->_color == BLACK && w->_right->_color == BLACK) {
-						w->_color = RED;
-						x = x->_parent;
+					if (w->left->color == BLACK && w->right->color == BLACK) {
+						w->color = RED;
+						x = x->parent;
 					} else {
-						if (w->_right->_color == BLACK) {
-							w->_left->_color = BLACK;
-							w->_color = RED;
+						if (w->right->color == BLACK) {
+							w->left->color = BLACK;
+							w->color = RED;
 							rightRotate(w);
-							w = x->_parent->_right;
+							w = x->parent->right;
 						}
-						w->_color = x->_parent->_color;
-						x->_parent->_color = BLACK;
-						w->_right->_color = BLACK;
-						leftRotate(x->_parent);
+						w->color = x->parent->color;
+						x->parent->color = BLACK;
+						w->right->color = BLACK;
+						leftRotate(x->parent);
 						x = root;
 					}
 				}
 				else {
-					w = x->_parent->_left;
-					if (w->_color == RED) {
-						w->_color = BLACK;
-						x->_parent->_color = RED;
-						rightRotate(x->_parent);
-						w = x->_parent->_left;
+					w = x->parent->left;
+					if (w->color == RED) {
+						w->color = BLACK;
+						x->parent->color = RED;
+						rightRotate(x->parent);
+						w = x->parent->left;
 					}
-					if (w->_right->_color == BLACK && w->_left->_color == BLACK) {
-						w->_color = RED;
-						x = x->_parent;
+					if (w->right->color == BLACK && w->left->color == BLACK) {
+						w->color = RED;
+						x = x->parent;
 					} else {
-						if (w->_left->_color == BLACK) {
-							w->_right->_color = BLACK;
-							w->_color = RED;
+						if (w->left->color == BLACK) {
+							w->right->color = BLACK;
+							w->color = RED;
 							leftRotate(w);
-							w = x->_parent->_left;
+							w = x->parent->left;
 						}
-						w->_color = x->_parent->_color;
-						x->_parent->_color = BLACK;
-						w->_left->_color = BLACK;
-						rightRotate(x->_parent);
+						w->color = x->parent->color;
+						x->parent->color = BLACK;
+						w->left->color = BLACK;
+						rightRotate(x->parent);
 						x = root;
 					}
 				}
 			}
-			x->_color = BLACK;
+			x->color = BLACK;
 		}
-		void printTree(Rb_node_type *root, int level, std::string side) {
+
+		void printTree(Rb_node *root, int level, std::string side) {
 
 			if (root == Nil)
 				return;
-			printTree(root->_right, level + 1, "R");
+			printTree(root->right, level + 1, "R");
 			for (int i = 0; i < level; i++) {
 				std::cout << "      ";
 			}
-			if (root->_color == RED) {
+			if (root->color == RED) {
 				std::cout << COR;
 			}
 			std::cout << side << " " << root->_data.first << RES;
 			std::cout << std::endl;
-			printTree(root->_left, level + 1, "L");
+			printTree(root->left, level + 1, "L");
 		}
-
-
 
 		void printBT(void) {
 			printTree(root, 0, "ROOT");
 		}
+
+		void nodeDestroy(Rb_node *node) {
+			_node_allocator.destroy(node);
+			_node_allocator.deallocate(node, 1);
+		}
+
+		void clear(Rb_node *node) {
+			if (node == Nil)
+				return ;
+			clear(node->left);
+			clear(node->right);
+			nodeDestroy(node);
+		}
+
+		void printInOrder(Rb_node *node) {
+			if (node == Nil)
+				return;
+			printInOrder(node->left);
+			std::cout << node->_data.first << " ";
+			printInOrder(node->right);
+		}
+
+		void clearTest(Rb_node *node) {
+			while(root != root->parent) {
+				nodeDelete(root);
+			}
+		}
+		private:
+			_node_allocator_type _node_allocator;
+
 	};
+
 
 }
 
