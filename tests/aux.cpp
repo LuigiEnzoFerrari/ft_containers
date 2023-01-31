@@ -11,27 +11,29 @@ string *arraySet( void ) {
 }
 
 
-// bool compareMapAndPair(ft::map<string, int> map, std::pair<string, int> *arr, size_t n) {
-// 	for (size_t i = 0; i < n; i++) {
-// 		if (!map.count(arr[i].first)) {
-// 			return (false);
-// 		}
-// 		if (map[arr[i].first] != arr[i].second) {
-// 			return (false);
-// 		}
-// 	}
-// 	return (true);
-// }
+bool compareMapAndPair(ft::map<string, int> map, ft::pair<string, int> *arr, size_t n) {
+	for (size_t i = 0; i < n; i++) {
+		if (!map.count(arr[i].first)) {
+			std::cout << !map.count(arr[i].first) << "==" << std::endl;
+			return (false);
+		}
+		if (map[arr[i].first] != arr[i].second) {
+			std::cout << map[arr[i].first] << "   " << arr[i].second << std::endl;
+			return (false);
+		}
+	}
+	return (true);
+}
 
-std::pair<string, int> *getCars( void ) {
-	static std::pair<string, int> *arr = new std::pair<string, int>[6];
+ft::pair<string, int> *getCars( void ) {
+	static ft::pair<string, int> *arr = new ft::pair<string, int>[6];
 
-	arr[0] = std::make_pair("Mitsubishi Lancer", 5);
-	arr[1] = std::make_pair("Peugeot 207", 3);
-	arr[2] = std::make_pair("Ferrari 458", 7);
-	arr[3] = std::make_pair("Kawasaki ZZR 250", 4);
-	arr[4] = std::make_pair("Porsche 911", 8);
-	arr[5] = std::make_pair("Subaru WRX", 6);
+	arr[0] = ft::make_pair("Mitsubishi Lancer", 5);
+	arr[1] = ft::make_pair("Peugeot 207", 3);
+	arr[2] = ft::make_pair("Ferrari 458", 7);
+	arr[3] = ft::make_pair("Kawasaki ZZR 250", 4);
+	arr[4] = ft::make_pair("Porsche 911", 8);
+	arr[5] = ft::make_pair("Subaru WRX", 6);
 	return (arr);
 }
 

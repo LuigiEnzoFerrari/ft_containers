@@ -25,9 +25,9 @@ std::string *arraySet( void );
 std::string *test( void );
 string *setCars( void );
 
-std::pair<string, int> *getCars( void );
+ft::pair<string, int> *getCars( void );
 
-// bool compareMapAndPair(ft::map<string, int> map, std::pair<string, int> *arr, size_t n);
+bool compareMapAndPair(ft::map<string, int> map, ft::pair<string, int> *arr, size_t n);
 
 void print_values( std::map<std::string, int> mymap );
 

@@ -28,22 +28,22 @@ STD_OBJS :=$(addprefix $(OBJDIR)std_, $(notdir $(SRCS:.cpp=.o)))
 
 INC := -I include/ -I tests/
 
-all: $(FT_NAME)# $(STD_NAME)
+all: $(FT_NAME) $(STD_NAME)
 
 $(FT_NAME): $(FT_OBJS) $(MAIN) $(HEADERS)
 	$(CC) $(CFLAGS) $(MAIN) $(INC) $(FT_OBJS) -o $@
 
-# $(STD_NAME): $(STD_OBJS) $(MAIN)
-# 	$(CC) $(CFLAGS) $(MAIN) $(INC) $(STD_OBJS) -o $@
+$(STD_NAME): $(STD_OBJS) $(MAIN)
+	$(CC) $(CFLAGS) $(MAIN) $(INC) $(STD_OBJS) -o $@
 
 $(OBJDIR)ft_%.o: %.cpp
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-# $(OBJDIR)std_%.o: %.cpp
-# 	$(CC) $(CFLAGS) -D STD $(INC) -c $< -o $@
+$(OBJDIR)std_%.o: %.cpp
+	$(CC) $(CFLAGS) -D STD $(INC) -c $< -o $@
 
 $(FT_OBJS): | $(OBJDIR)
-# $(STD_OBJS): | $(OBJDIR)
+$(STD_OBJS): | $(OBJDIR)
 
 $(OBJDIR):
 	mkdir $(OBJDIR)
