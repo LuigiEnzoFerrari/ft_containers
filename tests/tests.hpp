@@ -16,7 +16,7 @@
 ** TESTS_STL_VECTOR
 */
 typedef std::string string;
-typedef std::map<string, int>::iterator map_iterator;
+typedef ft::map<string, int>::iterator map_iterator;
 
 
 

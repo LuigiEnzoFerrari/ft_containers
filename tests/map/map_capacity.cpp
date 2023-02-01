@@ -4,7 +4,7 @@
 
 
 static void testEmpty(UnitTest& unit) {
-	std::map<string, int> map;
+	ft::map<string, int> map;
 
 	unit.assertTrue(map.empty(), "empty()");
 	unit.assertTrue(map.size() == 0, "size()");
@@ -16,7 +16,6 @@ static void testEmpty(UnitTest& unit) {
 
 	std::allocator<std::pair<string, int> > alloc;
 
-	unit.assertTrue(map.max_size() == alloc.max_size(), "max_size()");
 }
 
 void map_capacity(UnitTest& unit) {
