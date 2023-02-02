@@ -74,10 +74,10 @@ namespace ft {
 
 			iterator begin() {return (iterator(p));};
 			const_iterator begin() const {return (const_iterator(p));};
-	
+
 			iterator end() {return (empty() ? begin() : iterator(p + _size));};
 			const_iterator end() const {return (empty() ? begin() : const_iterator(p + _size));};
-	
+
 			reverse_iterator rbegin() {return (reverse_iterator(this->end()));};
 			const_reverse_iterator rbegin() const {return (const_reverse_iterator(this->end()));};
 
@@ -101,7 +101,7 @@ namespace ft {
 			};
 			size_type capacity() const {return (_capacity);};
 			bool empty() const {return (_size == 0);};
-		
+
 			void reserve (size_type n) {
 				if (n <= _capacity) {
 					return ;
@@ -146,7 +146,7 @@ namespace ft {
 		template <class InputIterator>
 		void assign (
 			InputIterator first,
-			typename ft::enable_if<!ft::is_integral<InputIterator>::value, 
+			typename ft::enable_if<!ft::is_integral<InputIterator>::value,
 			InputIterator>::type last) {
 			size_type n = ft::distance(first, last);
 
@@ -160,7 +160,7 @@ namespace ft {
 				_alloc.construct(&p[i + _size], *first++);
 			_size = n;
 		};
-	
+
 		void assign(size_type n, const value_type& val) {
 			reserve(n);
 			for (size_type i = 0; i < _size; i++) {

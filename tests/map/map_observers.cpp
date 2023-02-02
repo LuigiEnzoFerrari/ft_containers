@@ -1,8 +1,8 @@
 #include "tests.hpp"
 
 static void testKeyComp(UnitTest& unit) {
-    std::map<string, int> map;
-    std::map<string, int>::key_compare mycomp = map.key_comp();
+    ft::map<string, int> map;
+    ft::map<string, int>::key_compare mycomp = map.key_comp();
 
     map["a"] = 100;
     map["b"] = 200;
@@ -14,8 +14,8 @@ static void testKeyComp(UnitTest& unit) {
 }
 
 static void testValueComp(UnitTest& unit) {
-    std::map<string, int> map;
-    std::map<string, int>::value_compare mycomp = map.value_comp();
+    ft::map<string, int> map;
+    ft::map<string, int>::value_compare mycomp = map.value_comp();
 
     map["a"] = 100;
     map["b"] = 200;

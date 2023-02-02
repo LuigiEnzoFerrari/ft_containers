@@ -26,7 +26,7 @@ bool compareMapAndPair(ft::map<string, int> map, ft::pair<string, int> *arr, siz
 }
 
 ft::pair<string, int> *getCars( void ) {
-	static ft::pair<string, int> *arr = new ft::pair<string, int>[6];
+	static ft::pair<string, int> *arr = new ft::pair<string, int>[9];
 
 	arr[0] = ft::make_pair("Mitsubishi Lancer", 5);
 	arr[1] = ft::make_pair("Peugeot 207", 3);
@@ -42,7 +42,7 @@ ft::pair<string, int> *getCars( void ) {
 // 	{
 // 		std::cout << it->first    // string (key)
 // 				<< ':'
-// 				<< it->second   // string's value 
+// 				<< it->second   // string's value
 // 				<< std::endl;
 // 	}
 // }

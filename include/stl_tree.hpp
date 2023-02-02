@@ -33,13 +33,13 @@ namespace ft {
 
 			Rb_node *minimum( void ) {
 				Rb_node *x = this;
-				while (x->left != x->left->parent) { x = x->left; }
+				while (x->left != x->left->left) { x = x->left; }
 				return (x);
 			}
 
 			Rb_node *maximum( void ) {
 				Rb_node *x = this;
-				while (x->right != x->right->parent) { x = x->right; }
+				while (x->right != x->right->right) { x = x->right; }
 				return (x);
 			}
 
@@ -160,7 +160,7 @@ namespace ft {
 	class tree_iterator: public ft::iterator<ft::bidirectional_iterator_tag, T> {
 		protected:
 			typedef tree_iterator			iterator;
-			typedef Rb_tree_node<T>	Rb_node;
+			typedef Rb_tree_node<T>			Rb_node;
 
 		private:
 			Rb_node* Nil;
@@ -174,13 +174,14 @@ namespace ft {
 
 			explicit tree_iterator(Rb_node* x, Rb_node* _prev = NULL): current(x), prev(_prev) {
 				Nil = current->minimum()->left;
+				next = Nil;
 				if (x != Nil) {
 					prev = x->prev();
 					next = x->next();
 				}
 			}
 			tree_iterator(const iterator& src): Nil(src.Nil), next(src.next), current(src.current), prev(src.prev) {}
-			
+
 			iterator& operator=( const iterator& rhs ) {
 				if (*this != rhs) {
 					Nil = rhs.Nil;
@@ -190,7 +191,7 @@ namespace ft {
 				}
 				return (*this);
 			}
-			
+
 			~tree_iterator( void ) {}
 
 			T& operator*() const { return current->_data; }
@@ -198,42 +199,47 @@ namespace ft {
 			T* operator->() const { return &(operator*()); }
 
 			iterator& operator++() {
-				operator++(0);
+				if (prev != Nil) {
+					prev = prev->next();
+					current = prev->next();
+					next = current->next();
+				} else if (next != Nil) {
+					current = next;
+					next = next->next();
+					prev = current->prev();
+				} else {
+					current = next;
+				}
 				return (*this);
 			}
 
 			iterator operator++(int) {
-				if (current == Nil) {
-					current = next;
-					next = current->next();
-					return (iterator(current->prev()));
-				}
-				current = next;
-				next = current->next();
-				if (current != Nil) {
-					next = current->prev();
-				}
-				return (iterator(current->prev()));
+				iterator tmp(*this);
+				operator++();
+				return (tmp);
 			}
 
 			iterator& operator--() {
-				operator--(0);
+				if (next != Nil) {
+					next = next->prev();
+					current = next->prev();
+					prev = current->prev();
+				} else if (prev != Nil) {
+					current = prev;
+					prev = prev->prev();
+					next = current->next();
+				} else {
+					current = prev;
+				}
 				return (*this);
 			}
 
 			iterator operator--(int) {
-				if (current == Nil) {
-					current = prev;
-					prev = current->prev();
-					return (iterator(current->next()));
-				}
-				current = prev;
-				prev = current->prev();
-				if (current != Nil) {
-					next = current->next();
-				}
-				return (iterator(next));
+				iterator tmp(*this);
+				operator++();
+				return (tmp);
 			}
+
 
 			Rb_node* base() {
 				return (current);
@@ -248,6 +254,7 @@ namespace ft {
 	template <typename Key, typename value_type, typename Compare = std::less<Key>, typename Alloc = std::allocator<value_type> >
 	class Rb_tree {
 	public:
+		typedef Key												key_type;
 		typedef Alloc											allocator_type;
 		typedef typename allocator_type::size_type				size_type;
 		typedef Compare											key_compare;
@@ -321,11 +328,11 @@ namespace ft {
 		}
 
 		reverse_iterator rbegin( void ) {
-			return (reverse_iterator(iterator(root->maximum())));
+			return (reverse_iterator(end()));
 		};
 
 		reverse_iterator rend( void ) {
-			return (reverse_iterator(iterator(Nil)));
+			return (reverse_iterator(begin()));
 		}
 
 		bool empty( void ) const {
@@ -447,6 +454,7 @@ namespace ft {
 				deleteFixUp(x);
 			}
 			_size--;
+			nodeDestroy(node);
 		}
 
 		void transplant(Rb_node *u, Rb_node *v) {
@@ -580,6 +588,59 @@ namespace ft {
 			clear(node->left);
 			clear(node->right);
 			nodeDestroy(node);
+			root = Nil;
+			_size = 0;
+		}
+
+		iterator lower_bound(const key_type& k) {
+			Rb_node *node = root->minimum();
+			while (node != Nil) {
+				if (!_comp(node->_data.first, k))
+					break ;
+				node = node->next();
+			}
+			return iterator(node);
+		}
+
+		const_iterator lower_bound(const key_type& k) const {
+			return const_iterator(lower_bound(k));
+		}
+
+		iterator upper_bound(const key_type& k) {
+			Rb_node *node = root->minimum();
+			while (node != Nil) {
+				if (_comp(k, node->_data.first))
+					break ;
+				node = node->next();
+			}
+			return iterator(node);
+		}
+
+		const_iterator upper_bound(const key_type& k) const {
+			return const_iterator(upper_bound(k));
+		}
+
+		ft::pair<const_iterator, const_iterator> equal_range(const key_type& k) const {
+			return ft::make_pair(lower_bound(k), upper_bound(k));
+		}
+
+		ft::pair<iterator, iterator> equal_range(const key_type& k) {
+			return ft::make_pair(lower_bound(k), upper_bound(k));
+		}
+		void clear( void ) {
+			clear(root);
+		}
+
+		void swap( Rb_tree& x ) {
+			Rb_node* tmproot = x.root;
+			Rb_node* tmpNil = x.Nil;
+			size_type tmpSize = x._size;
+			x.root = root;
+			x.Nil = Nil;
+			x._size = _size;
+			root = tmproot;
+			Nil = tmpNil;
+			_size = tmpSize;
 		}
 
 	private:

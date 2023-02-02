@@ -72,53 +72,42 @@ static void testEraseKey(UnitTest& unit) {
 	unit.assertTrue(map.size() == 2, "map.size() == 2");
 }
 
-// static void testEraseRange(UnitTest& unit) {
-//     ft::pair<string, int> *p = getCars();
-//     ft::map<string, int> map(p, p + 3);
-//     map_iterator it;
+static void testEraseRange(UnitTest& unit) {
+    ft::pair<string, int> *p = getCars();
+    ft::map<string, int> map(p, p + 3);
 
-//     map.erase(map.begin(), map.end());
-//     unit.assertTrue(map.size() == 0, "map.size() == 0");
-//     unit.assertTrue(map.count(p[0].first) == 0, "map.count(p[0].first) == 0");
-// }
+	map.erase(map.begin(), map.end());
 
-void funcX( UnitTest& unit ) {
-	ft::pair<string, int> *p = getCars();
-	ft::map<string, int> map(p, p + 3);
-	ft::map<string, int>::iterator it = map.begin();
-
-	map.erase(it);
-	it = map.begin();
-	for (; it != map.end(); it++) {};
-	unit.assertTrue(true);
+    unit.assertTrue(map.size() == 0, "map.size() == 0");
+    unit.assertTrue(map.count(p[0].first) == 0, "map.count(p[0].first) == 0");
 }
 
-// static void testSwap(UnitTest& unit) {
-//     ft::pair<string, int> *p = getCars();
-//     ft::map<string, int> map(p, p + 3);
-//     ft::map<string, int> map2;
+static void testSwap(UnitTest& unit) {
+    ft::pair<string, int> *p = getCars();
+    ft::map<string, int> map(p, p + 3);
+    ft::map<string, int> map2;
 
-//     map.swap(map2);
-//     unit.assertTrue(map.size() == 0, "map.size() == 0");
-//     unit.assertTrue(map2.size() == 3, "map2.size() == 3");
-//     unit.assertTrue(compareMapAndPair(map2, p, 3) == true, "compareMapAndPair(map2, p, 3) == true");
+    map.swap(map2);
+    unit.assertTrue(map.size() == 0, "map.size() == 0");
+    unit.assertTrue(map2.size() == 3, "map2.size() == 3");
+    unit.assertTrue(compareMapAndPair(map2, p, 3) == true, "compareMapAndPair(map2, p, 3) == true");
 
-//     map[p[4].first] = p[4].second;
-//     map[p[5].first] = p[5].second;
-//     map2.swap(map);
-//     unit.assertTrue(map.size() == 3, "map.size() == 3");
-//     unit.assertTrue(map2.size() == 2, "map2.size() == 2");
-//     unit.assertTrue(compareMapAndPair(map2, p + 4, 2) == true, "compareMapAndPair(map, p + 4, 2) == true");
-// }
+    map[p[4].first] = p[4].second;
+    map[p[5].first] = p[5].second;
+    map2.swap(map);
+    unit.assertTrue(map.size() == 3, "map.size() == 3");
+    unit.assertTrue(map2.size() == 2, "map2.size() == 2");
+    unit.assertTrue(compareMapAndPair(map2, p + 4, 2) == true, "compareMapAndPair(map, p + 4, 2) == true");
+}
 
-// static void testClear(UnitTest& unit) {
-//     ft::pair<string, int> *p = getCars();
-//     ft::map<string, int> map(p, p + 6);
+static void testClear(UnitTest& unit) {
+    ft::pair<string, int> *p = getCars();
+    ft::map<string, int> map(p, p + 6);
 
-//     map.clear();
-//     unit.assertTrue(map.size() == 0, "map.size() == 0");
-//     unit.assertTrue(map.count(p[0].first) == 0, "map.count(p[0].first) == 0");
-// }
+    map.clear();
+    unit.assertTrue(map.size() == 0, "map.size() == 0");
+    unit.assertTrue(map.count(p[0].first) == 0, "map.count(p[0].first) == 0");
+}
 
 void map_modifiers(UnitTest& unit) {
 	unit.runTest(testInsertSingleElement, "testInsertSingleElement");
@@ -126,7 +115,7 @@ void map_modifiers(UnitTest& unit) {
 	unit.runTest(testInsertRange, "testInsertRange");
 	unit.runTest(testEraseIterator, "testEraseIterator");
 	unit.runTest(testEraseKey, "testEraseKey");
-	unit.runTest(funcX, "testEraseRange");
-	// unit.runTest(testSwap, "testSwap");
-	// unit.runTest(testClear, "testClear");
+	unit.runTest(testEraseRange, "testEraseRange");
+	unit.runTest(testSwap, "testSwap");
+	unit.runTest(testClear, "testClear");
 }
