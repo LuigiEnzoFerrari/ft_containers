@@ -50,7 +50,7 @@ namespace ft {
 				reverse_iterator tmp(*this);
 				operator--();
 				return (tmp);
-			}	
+			}
 
 			reverse_iterator &operator+=(difference_type n) {
 				it -= n;
@@ -80,6 +80,40 @@ namespace ft {
 			}
 	};
 
+	template <typename Iterator>
+	bool operator==(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs) {
+		return (lhs.base() == rhs.base());
+	}
+	template <typename Iterator>
+	bool operator!=(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs) {
+		return (lhs.base() != rhs.base());
+	}
+	template <typename Iterator>
+	bool operator<(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs) {
+		return (lhs.base() > rhs.base());
+	}
+	template <typename Iterator>
+	bool operator<=(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs) {
+		return (lhs.base() >= rhs.base());
+	}
+	template <typename Iterator>
+	bool operator>(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs) {
+		return (lhs.base() < rhs.base());
+	}
+	template <typename Iterator>
+	bool operator>=(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs) {
+		return (lhs.base() <= rhs.base());
+	}
+
+	template <typename Iterator>
+	reverse_iterator<Iterator> operator+(typename reverse_iterator<Iterator>::difference_type n, const reverse_iterator<Iterator> &rev_it) {
+			return (rev_it + n);
+	}
+	template <typename Iterator>
+	reverse_iterator<Iterator> operator-(typename reverse_iterator<Iterator>::difference_type n, const reverse_iterator<Iterator> &rev_it) {
+			return (rev_it - n);
+	}
+
 	template <typename T>
 	class normal_iterator: public ft::iterator<ft::random_access_iterator_tag, T> {
 		protected:
@@ -91,7 +125,7 @@ namespace ft {
 			typedef typename traits_type::pointer				pointer;
 			typedef typename traits_type::reference				reference;
 			typedef typename traits_type::iterator_category		iterator_category;
-		
+
 			normal_iterator( void ): p(NULL) {}
 			explicit normal_iterator(T* x): p(x) {}
 			normal_iterator(const normal_iterator& src): p(src.p) {}
@@ -163,7 +197,7 @@ namespace ft {
 				normal_iterator tmp(*this);
 				operator--();
 				return (tmp);
-			}	
+			}
 
 			reference operator*() const {
 				return (*p);
@@ -184,7 +218,7 @@ namespace ft {
 	typename iterator_traits<InputIterator>::difference_type distance (InputIterator first, InputIterator last) {
 		typename std::iterator_traits<InputIterator>::difference_type i = 0;
 		for (; first != last; i++, first++) {};
-		return (i); 
+		return (i);
 	}
 }
 

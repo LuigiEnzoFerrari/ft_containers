@@ -6,9 +6,9 @@ static void testBaseFunction(UnitTest& unit) {
 	ft::vector<int>::iterator it(p);
 
 	ft::vector<int>::reverse_iterator rit(it + 5);
-	
+
 	unit.assertTrue(*(it + 4) == *(rit.base() - 1), "Expect: True; *(it + 4) == *(rit.base() - 1)");
-	
+
 	delete[] p;
 }
 
@@ -20,11 +20,11 @@ static void testOffSetDereferenceOperator(UnitTest& unit) {
 
 	ft::vector<int>::reverse_iterator rit(it + 5);
 	for (int i = 0; i < 5; i++) {
-			p[i] = i<<1;
-			if (rit[4 - i] != p[i]) {
-				equal = false;
-			}
+		p[i] = i<<1;
+		if (rit[4 - i] != p[i]) {
+			equal = false;
 		}
+	}
 	unit.assertTrue(equal, "Expect: True; it[i] == p[i]");
 	delete[] p;
 }
@@ -34,12 +34,12 @@ static void testIteratorIncrementedDecremented(UnitTest& unit) {
 	int *tmp = p;
 	bool equal = true;
 	for (int i = 0; i < 5; i++) {
-		p[i] = i<<1;
+			p[i] = i<<1;
 	}
 	typedef ft::vector<int>::iterator iter_type;
 	ft::vector<int> src(p, p + 5);
 	iter_type it = src.begin();
-	
+
 	ft::vector<int>::reverse_iterator rit(it + 5);
 	it += 4;
 	for (int i = 0; i < 5; i++, rit++, it--) {

@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-void testIterators(UnitTest& unit) {
+static void testIterators(UnitTest& unit) {
 	ft::pair<string, int> *arr = getCars();
 	{
 		ft::map<string, int> cars(arr, arr + 3);
@@ -18,6 +18,7 @@ void testIterators(UnitTest& unit) {
 		}
 		unit.assertTrue(equal, "rbegin()~rend()");
 	}
+	delete[] arr;
 }
 
 void map_iterators(UnitTest& unit) {

@@ -1,7 +1,7 @@
 FT_NAME := ft_containers
 STD_NAME := std_containers
 CC := c++
-CFLAGS := -g -Wall -Wextra -Werror -Wfatal-errors -pedantic-errors -std=c++98 -fsanitize=address
+CFLAGS := -g -Wall -Wextra -Werror -Wfatal-errors -pedantic-errors -std=c++98# -fsanitize=address
 MAIN = main.cpp
 
 

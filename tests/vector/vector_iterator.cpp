@@ -68,11 +68,11 @@ static void testOffSetDereferenceOperator(UnitTest& unit) {
 
 	ft::vector<int>::iterator it(p);
 	for (int i = 0; i < 5; i++) {
-			p[i] = i<<1;
-			if (it[i] != p[i]) {
-				equal = false;
-			}
+		p[i] = i<<1;
+		if (it[i] != p[i]) {
+			equal = false;
 		}
+	}
 	unit.assertTrue(equal, "Expect: True; it[i] == p[i]");
 	delete[] p;
 }
@@ -91,7 +91,7 @@ static void testCompoundAssignmentOperations(UnitTest& unit) {
 }
 
 static void testCompareOperators(UnitTest& unit) {
-	
+
 	int *p = new int[5];
 
 	for (int i = 0; i < 5; i++) { p[i] = i<<1; }
@@ -102,10 +102,10 @@ static void testCompareOperators(UnitTest& unit) {
 
 	unit.assertFalse(it > it, "Expected: False, it > it");
 	unit.assertTrue(it + 1 > it, "Expected: True, it + 1 > it");
-	
+
 	unit.assertFalse(it < it, "Expected: False, it < it");
 	unit.assertTrue(it < it + 1, "Expected: True, it < it + 1");
-	
+
 	unit.assertTrue(it >= it, "Expected: True, it >= it");
 	unit.assertTrue(it + 1 >= it, "Expected: True, it + 1 >= it");
 	unit.assertFalse(it >= it + 1, "Expected: False, it >= it + 1");

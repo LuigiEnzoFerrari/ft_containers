@@ -1,13 +1,13 @@
 #include "tests.hpp"
 #include <algorithm>
-static void testDefaultConstructor(UnitTest& unit) {
+void testDefaultConstructor(UnitTest& unit) {
 	ft::vector<string> vec;
 
 	unit.assertTrue(vec.empty(), "empty() == true");
 	unit.assertTrue(vec.capacity() == 0, "size == 0");
 }
 
-static void testFillConstructor(UnitTest& unit) {
+void testFillConstructor(UnitTest& unit) {
 	string *names = arraySet();
 	{
 		ft::vector<string> vec(3, names[1]);
@@ -24,7 +24,7 @@ static void testFillConstructor(UnitTest& unit) {
 	delete[] names;
 }
 
-static void testRangeConstructor(UnitTest& unit) {
+void testRangeConstructor(UnitTest& unit) {
 	string *names = arraySet();
 	{
 		ft::vector<string> vec(names + 2, names + 4);
@@ -32,15 +32,23 @@ static void testRangeConstructor(UnitTest& unit) {
 		unit.assertTrue(vec.size() == 2, "size == 2");
 		unit.assertTrue(vec.capacity() == 2, "capacity == 2");
 	}
-
 	delete[] names;
 }
 
-static void testCopyConstructor(UnitTest& unit) {
+void testCopyConstructor(UnitTest& unit) {
 	string *names = arraySet();
 	{
 		ft::vector<string> vec(names + 1, names + 5);
 		ft::vector<string> vec2(vec);
+		bool equal = true;
+		for (size_t i = 0; i < vec.size(); i++) {if(vec[i] != vec2[i]) { equal = false;}}
+		unit.assertTrue(ft::equal(vec.begin(), vec.end(), vec2.begin()), "*vec++ == *vec2++");
+		unit.assertTrue(vec.size() == 4, "size == 4");
+		unit.assertTrue(vec.capacity() == 4, "capacity == 4");
+	}
+	{
+		ft::vector<string> vec(names + 1, names + 5);
+		ft::vector<string> vec2 = vec;
 		bool equal = true;
 		for (size_t i = 0; i < vec.size(); i++) {if(vec[i] != vec2[i]) { equal = false;}}
 		unit.assertTrue(ft::equal(vec.begin(), vec.end(), vec2.begin()), "*vec++ == *vec2++");
