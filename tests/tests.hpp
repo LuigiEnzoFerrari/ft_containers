@@ -27,6 +27,7 @@ string *setCars( void );
 ft::pair<string, int> *getCars( void );
 
 void vector_iterator(UnitTest& unit);
+void vector_const_iterator(UnitTest& unit);
 void vector_reverse_iterator(UnitTest& unit);
 void vector_modifiers(UnitTest& unit);
 void vector_elements_access(UnitTest& unit);
@@ -42,5 +43,8 @@ void map_modifiers(UnitTest& unit);
 void map_observers(UnitTest& unit);
 void map_operations(UnitTest& unit);
 void map_pair(UnitTest& unit);
+void map_keys_order(UnitTest& unit);
+
+
 
 #endif

@@ -11,7 +11,7 @@ VPATH = tests/ $(addprefix tests/, $(TESTDIRS)) include/
 
 TESTS = aux.cpp UnitTest.cpp
 
-VECTOR := vector_iterator.cpp vector_reverse_iterator.cpp \
+VECTOR := vector_iterator.cpp vector_const_iterator.cpp vector_reverse_iterator.cpp \
 	vector_modifiers.cpp vector_elements_access.cpp \
 	vector_constructors.cpp vector_capacity.cpp \
 	vector_non_member_functions.cpp \
@@ -21,6 +21,7 @@ HEADERS = stl_map.hpp
 
 MAP := map_pair.cpp map_constructors.cpp map_capacity.cpp map_element_access.cpp \
 	map_iterators.cpp map_modifiers.cpp map_observers.cpp map_operations.cpp \
+	map_keys_order.cpp
 
 SRCS :=  $(VECTOR) $(MAP) $(TESTS)
 OBJDIR := ./objs/
