@@ -1,6 +1,19 @@
 #include "UnitTest.hpp"
 
-void UnitTest::assertTrue(bool condition, std::string message = "") {
+UnitTest::UnitTest( std::string assert_fail,
+	std::string assert_pass):
+	_assert_fail(assert_fail),
+	_assert_pass(assert_pass),
+	_total(0), _passed(0),
+	_suits(NULL), _exit_code(0) {
+		this->_assert_color_pass = "\033[32m";
+		this->_assert_color_fail =  "\033[31m";
+		this->_mode = true;
+}
+
+UnitTest::~UnitTest( void ) {}
+
+void UnitTest::assertTrue(bool condition, std::string message) {
 	std::ostream* output_stream;
 
 	message = !message.compare("") ? message : " " + message;

@@ -23,6 +23,15 @@ public:
 	std::string name;
 };
 
+class Asserts {
+	public:
+		Asserts( void ) {};
+		virtual ~Asserts( void ) {};
+		virtual void assertFalse(bool condition) const = 0;
+		virtual void assertTrue(bool condition) const = 0;
+
+};
+
 class UnitTest {
 	private:
 		std::string _assert_fail;
@@ -36,19 +45,9 @@ class UnitTest {
 		int _exit_code;
 	public:
 		UnitTest( std::string assert_fail = "Fail",
-			std::string assert_pass = "Pass"):
-			_assert_fail(assert_fail),
-			_assert_pass(assert_pass),
-			_total(0), _passed(0),
-			_suits(NULL), _exit_code(0) {
-			this->_assert_color_pass = "\033[32m";
-			this->_assert_color_fail =  "\033[31m";
-			this->_mode = true;
-		};
-
-		~UnitTest( void ) {};
-
-		void assertTrue(bool condition, std::string message);
+			std::string assert_pass = "Pass");
+		~UnitTest( void );
+		void assertTrue(bool condition, std::string message = "");
 		void assertFalse(bool condition);
 		void assertFalse(bool condition, std::string message);
 		void setMode( bool mode );
@@ -59,6 +58,7 @@ class UnitTest {
 		void run(Node* suit);
 		void clear( void );
 		void status( void );
+
 };
 
 #endif
