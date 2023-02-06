@@ -5,7 +5,7 @@ static void testIterators(UnitTest& unit) {
 	{
 		ft::map<string, int> cars(arr, arr + 3);
 		bool equal = false;
-		for (map_iterator it = cars.begin(); it != cars.end(); it++) {
+		for (ft::map<string, int>::iterator it = cars.begin(); it != cars.end(); it++) {
 			equal = true;
 		}
 		unit.assertTrue(equal, "begin()~end()");

@@ -4,8 +4,8 @@ static void check_default_order(UnitTest& unit) {
 	ft::pair<string, int> *arr = getCars();
 
 	ft::map<string, int> cars(arr, arr + 6);
-	map_iterator it = cars.begin();
-	map_iterator last = it++;
+	ft::map<string, int>::iterator it = cars.begin();
+	ft::map<string, int>::iterator last = it++;
 
 	bool inoder = true;
 	bool wrong = false;
@@ -23,6 +23,7 @@ static void check_default_order(UnitTest& unit) {
 	}
 	unit.assertTrue(inoder, "checking default order in three with std::less");
 	unit.assertFalse(wrong, "expecting false using std::greater?");
+	delete[] arr;
 }
 
 static void check_greater_order(UnitTest& unit) {
@@ -32,8 +33,8 @@ static void check_greater_order(UnitTest& unit) {
 	std::greater<string> greater;
 
 	ft::map<string, int, std::greater<string> > cars(arr, arr + 6);
-	map_iterator it = cars.begin();
-	map_iterator last = it++;
+	ft::map<string, int>::iterator it = cars.begin();
+	ft::map<string, int>::iterator last = it++;
 
 	bool inoder = true;
 	bool wrong = false;
@@ -49,6 +50,7 @@ static void check_greater_order(UnitTest& unit) {
 	}
 	unit.assertTrue(inoder, "checking default order in three with std::greater");
 	unit.assertFalse(wrong, "expecting false using std::less?");
+	delete[] arr;
 }
 
 void map_keys_order(UnitTest& unit) {

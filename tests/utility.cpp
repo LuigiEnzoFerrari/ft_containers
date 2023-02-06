@@ -14,11 +14,9 @@ string *arraySet( void ) {
 bool compareMapAndPair(ft::map<string, int> map, ft::pair<string, int> *arr, size_t n) {
 	for (size_t i = 0; i < n; i++) {
 		if (!map.count(arr[i].first)) {
-			std::cout << !map.count(arr[i].first) << "==" << std::endl;
 			return (false);
 		}
 		if (map[arr[i].first] != arr[i].second) {
-			std::cout << map[arr[i].first] << "		" << arr[i].second << std::endl;
 			return (false);
 		}
 	}
@@ -27,7 +25,6 @@ bool compareMapAndPair(ft::map<string, int> map, ft::pair<string, int> *arr, siz
 
 ft::pair<string, int> *getCars( void ) {
 	ft::pair<string, int> *arr = new ft::pair<string, int>[6];
-
 	arr[0] = ft::make_pair("Mitsubishi Lancer", 5);
 	arr[1] = ft::make_pair("Peugeot 207", 3);
 	arr[2] = ft::make_pair("Ferrari 458", 7);

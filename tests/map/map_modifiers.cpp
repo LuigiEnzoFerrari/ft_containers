@@ -52,7 +52,7 @@ static void testInsertRange(UnitTest& unit) {
 static void testEraseIterator(UnitTest& unit) {
 	ft::pair<string, int> *p = getCars();
 	ft::map<string, int> map(p, p + 3);
-	map_iterator it;
+	ft::map<string, int>::iterator it;
 
 	it = map.find(p[0].first);
 	map.erase(it);
@@ -66,7 +66,7 @@ static void testEraseIterator(UnitTest& unit) {
 static void testEraseKey(UnitTest& unit) {
 	ft::pair<string, int> *p = getCars();
 	ft::map<string, int> map(p, p + 3);
-	map_iterator it;
+	ft::map<string, int>::iterator it;
 
 	map.erase(p[1].first);
 	unit.assertTrue(map.count(p[1].first) == 0, "map.count(p[1].first) == 0");
