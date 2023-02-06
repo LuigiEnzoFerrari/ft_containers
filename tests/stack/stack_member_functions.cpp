@@ -76,7 +76,41 @@ static void testPushTopPop(UnitTest& unit) {
 	myStack.pop();
 	delete[] names;
 }
+static void testRelationalOperators(UnitTest& unit) {
+		ft::stack<int> s1;
+		ft::stack<int> s2;
+
+		s1.push(1);
+		s1.push(2);
+		s1.push(3);
+
+		s2.push(1);
+		s2.push(2);
+		s2.push(3);
+
+		unit.assertTrue(s1 == s2, "stacks are equal");
+
+		s2.push(4);
+		unit.assertTrue(s1 != s2, "stacks are not equal");
+
+		s1.pop();
+		unit.assertTrue(s1 < s2, "stack 1 is less than stack 2");
+
+		s1.push(3);
+		s1.push(4);
+		s1.push(5);
+		unit.assertTrue(s1 > s2, "stack 1 is greater than stack 2");
+
+		s1.pop();
+		unit.assertTrue(s1 <= s2, "stack 1 is less than or equal to stack 2");
+
+		s2.pop();
+		unit.assertTrue(s1 >= s2, "stack 1 is greater than or equal to stack 2");
+}
+
+
 void stack_member_functions(UnitTest& unit) {
 	unit.runTest(testDefaultConstructor, "testDefaultConstrutor");
 	unit.runTest(testPushTopPop, "testPushTopPop");
+	unit.runTest(testRelationalOperators, "testRelationalOperators");
 }

@@ -24,7 +24,7 @@ MAP := map_pair.cpp map_constructors.cpp map_capacity.cpp map_element_access.cpp
 
 STACK := stack_member_functions.cpp
 
-HEADERS = stl_map.hpp
+HEADERS = map.hpp stack.hpp vector.hpp
 SRCS :=  $(VECTOR) $(MAP) $(STACK) $(TESTS)
 OBJDIR := ./objs/
 

@@ -1,6 +1,6 @@
-#ifndef STL_STACK_HPP
-#define STL_STACK_HPP
-#include "stl_vector.hpp"
+#ifndef STACK_HPP
+#define STACK_HPP
+#include "vector.hpp"
 namespace ft {
 	template <class T, class Container = ft::vector<T> >
 	class stack {
@@ -8,6 +8,12 @@ namespace ft {
 			typedef typename	Container::value_type		value_type;
 			typedef typename	Container::size_type		size_type;
 			typedef				Container					container_type;
+
+			template <typename T1, typename Container1>
+			friend bool operator==(const stack<T1, Container1> &, const stack<T1, Container1> &);
+
+			template <typename T1, typename Container1>
+			friend bool operator<(const stack<T1, Container1> &, const stack<T1, Container1> &);
 
 			explicit stack (const container_type& ctnr = container_type()): c(ctnr) {
 			};

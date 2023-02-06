@@ -3,4 +3,3 @@ build/
 objs/
 ft_containers
 std_containers
-main.cpp

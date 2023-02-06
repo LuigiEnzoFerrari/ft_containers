@@ -1,5 +1,5 @@
-#ifndef STL_MAP_HPP
-# define STL_MAP_HPP
+#ifndef MAP_HPP
+# define MAP_HPP
 
 #include "stl_utility.hpp"
 #include "stl_functional.hpp"

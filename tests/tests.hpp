@@ -6,9 +6,9 @@
 #include <deque>
 
 #ifndef STD
-	#include "./stl_vector.hpp"
-	#include "./stl_map.hpp"
-	#include "./stl_stack.hpp"
+	#include "./vector.hpp"
+	#include "./map.hpp"
+	#include "./stack.hpp"
 #else
 	namespace ft = std;
 	#include <map>

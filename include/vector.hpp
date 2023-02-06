@@ -1,8 +1,8 @@
 /* Copyright (c) 2023 Caio Souza. All rights reserved. */
 /* 42 */
 
-#ifndef STL_VECTOR_HPP
-# define STL_VECTOR_HPP
+#ifndef VECTOR_HPP
+# define VECTOR_HPP
 
 #include <iostream>
 #include <vector>
