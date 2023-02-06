@@ -1,6 +1,3 @@
-/* Copyright (c) 2023 Caio Souza. All rights reserved. */
-/* 42 */
-
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
