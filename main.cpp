@@ -25,7 +25,7 @@ int main( void ) {
 	unit.addSuit(map_operations, "MAP - OPERATIONS");
 	unit.addSuit(map_keys_order, "MAP - KEYS ORDER");
 
-	unit.addSuit(stack_member_functions, "STACK - MEMBERS");
+	unit.addSuit(stack_member_functions, "STACK - MEMBER FUNCTIONS");
 
 	unit.run();
 	unit.status();
