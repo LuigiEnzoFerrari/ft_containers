@@ -71,8 +71,8 @@ namespace ft {
 	template <typename T>
 	class tree_iterator: public ft::iterator<ft::bidirectional_iterator_tag, T> {
 		protected:
-			typedef tree_iterator					iterator;
-			typedef Rb_tree_node<T>					Rb_node;
+			typedef tree_iterator	iterator;
+			typedef Rb_tree_node<T>	Rb_node;
 
 		private:
 			Rb_node* Nil;
